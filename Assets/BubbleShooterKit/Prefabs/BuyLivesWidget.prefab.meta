@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c43228b1b98e3b34ba59666534873f6d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/BuyLivesWidget.prefab
+  uploadId: 701269

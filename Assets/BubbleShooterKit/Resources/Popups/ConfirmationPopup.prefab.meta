@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0bf82d50bd82c45348dc03fdf31555e8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Resources/Popups/ConfirmationPopup.prefab
+  uploadId: 701269

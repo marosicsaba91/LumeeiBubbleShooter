@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 04585921b24a34acb847bfcb0e89f2f6
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Scenes/LevelScreen.unity
+  uploadId: 701269

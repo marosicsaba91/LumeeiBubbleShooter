@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ad58684bf4f8f4f6393ea9b55d1071ee
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/Popups/LosePopup/FoxLoseNose.controller
+  uploadId: 701269

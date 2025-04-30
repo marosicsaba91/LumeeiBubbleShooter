@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e2fabf3e1555f4e07b47f9fcfd44fedc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/HorizontalBomb/HorizontalBombEyes.controller
+  uploadId: 701269

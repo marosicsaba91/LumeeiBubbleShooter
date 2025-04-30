@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aec0e76d857ff4dfb88d99ca0594172c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/Fox/EyesIdle.anim
+  uploadId: 701269

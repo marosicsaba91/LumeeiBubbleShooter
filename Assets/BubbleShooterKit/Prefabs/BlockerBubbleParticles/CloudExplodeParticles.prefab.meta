@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0828f62f345384e1f942bdd4c7e5f46a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/BlockerBubbleParticles/CloudExplodeParticles.prefab
+  uploadId: 701269

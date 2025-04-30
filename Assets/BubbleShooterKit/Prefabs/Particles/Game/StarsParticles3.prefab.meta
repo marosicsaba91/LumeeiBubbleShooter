@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ef05c99975ef54debbab0a76153b13cd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/Particles/Game/StarsParticles3.prefab
+  uploadId: 701269

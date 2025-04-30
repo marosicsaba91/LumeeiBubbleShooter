@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d763d81cb720c43e2a4b85bf1683c5b2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/HorizontalBomb/HorizontalBomb_Idle.anim
+  uploadId: 701269

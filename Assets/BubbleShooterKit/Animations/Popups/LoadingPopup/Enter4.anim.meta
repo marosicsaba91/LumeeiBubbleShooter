@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f155146b8251d4d029da8fe93f7f4bd2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/Popups/LoadingPopup/Enter4.anim
+  uploadId: 701269

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5092947c43d094c9da0bf74bd5be0af9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/StickyBubble/StickyBubble_Idle.anim
+  uploadId: 701269

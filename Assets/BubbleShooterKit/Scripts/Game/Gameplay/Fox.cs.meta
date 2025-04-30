@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 454404435aa45894c9fc1f6a570248b6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Scripts/Game/Gameplay/Fox.cs
+  uploadId: 701269

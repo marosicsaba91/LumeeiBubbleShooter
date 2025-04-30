@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 91884fccb9f3146c3af2e8ac36332543
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/Bubbles/Bomb.controller
+  uploadId: 701269

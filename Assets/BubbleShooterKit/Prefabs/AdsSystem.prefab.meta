@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3c3516257547f4ce8a793abdc4ef030d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/AdsSystem.prefab
+  uploadId: 701269

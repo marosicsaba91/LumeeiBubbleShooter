@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 903dededd35ad77439d6e9681fe3b06b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4343727234628468602
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/SpriteAtlas/WinPopup.spriteatlas
+  uploadId: 701269

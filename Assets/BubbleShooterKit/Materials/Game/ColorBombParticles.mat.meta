@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0f3e6d91f0e4e47f0961247417c62b2b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Materials/Game/ColorBombParticles.mat
+  uploadId: 701269

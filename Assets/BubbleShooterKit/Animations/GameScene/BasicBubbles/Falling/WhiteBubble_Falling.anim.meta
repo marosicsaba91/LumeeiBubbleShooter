@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 73a944e53ff4a4ba299ff00e88f3a1cc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/BasicBubbles/Falling/WhiteBubble_Falling.anim
+  uploadId: 701269

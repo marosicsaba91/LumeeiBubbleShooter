@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 78d9769925b76904c945dc19b152b2af
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4343727234628468602
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/SpriteAtlas/LivesPopup.spriteatlas
+  uploadId: 701269

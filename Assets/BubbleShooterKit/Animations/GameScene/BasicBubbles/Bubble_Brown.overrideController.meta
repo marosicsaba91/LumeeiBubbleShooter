@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fb4ba657ec60b2f4f8e441ade46b2323
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 22100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/BasicBubbles/Bubble_Brown.overrideController
+  uploadId: 701269

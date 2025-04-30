@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 463e8a62d35ec4ec8bc7e2d9d9c3c180
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/Bubbles/ColorBomb.controller
+  uploadId: 701269

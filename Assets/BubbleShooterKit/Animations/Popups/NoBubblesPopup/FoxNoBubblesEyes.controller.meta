@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 50327d7c5f88b40f9a7f37f51b8dab1f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/Popups/NoBubblesPopup/FoxNoBubblesEyes.controller
+  uploadId: 701269

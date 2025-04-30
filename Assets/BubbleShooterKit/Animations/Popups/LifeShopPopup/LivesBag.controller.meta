@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e3c2809dfaccb46a68fc67f07539cc05
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/Popups/LifeShopPopup/LivesBag.controller
+  uploadId: 701269

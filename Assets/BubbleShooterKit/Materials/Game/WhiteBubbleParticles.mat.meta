@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8b25b910e8f8347d4a922601e84ce063
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Materials/Game/WhiteBubbleParticles.mat
+  uploadId: 701269

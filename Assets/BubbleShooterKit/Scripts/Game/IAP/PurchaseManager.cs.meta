@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 659a0063cf1da4399a65ddf98930a07c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Scripts/Game/IAP/PurchaseManager.cs
+  uploadId: 701269

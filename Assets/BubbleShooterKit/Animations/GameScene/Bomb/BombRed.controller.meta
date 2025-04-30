@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8c97789bd2a3a4731839951aac0a02d1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/Bomb/BombRed.controller
+  uploadId: 701269

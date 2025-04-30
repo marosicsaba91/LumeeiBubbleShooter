@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6a6243e8c998e474ca9f3f2668730870
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Scripts/Common/SoundCollection.cs
+  uploadId: 701269

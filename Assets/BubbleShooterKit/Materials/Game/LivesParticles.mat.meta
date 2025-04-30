@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cd7cdfb140ba344c19f71d5919c5659a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Materials/Game/LivesParticles.mat
+  uploadId: 701269

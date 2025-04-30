@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 80be818e55da14c118c34c8ee9c3b736
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/HomeScene/Logo.controller
+  uploadId: 701269

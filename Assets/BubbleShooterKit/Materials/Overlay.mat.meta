@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2bdafff0d742a4c54ac36c2821914a99
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Materials/Overlay.mat
+  uploadId: 701269

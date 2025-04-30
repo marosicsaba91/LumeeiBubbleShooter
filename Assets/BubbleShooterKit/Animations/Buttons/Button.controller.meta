@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 058b4b0ddcaad4d708359d8956236fcc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/Buttons/Button.controller
+  uploadId: 701269

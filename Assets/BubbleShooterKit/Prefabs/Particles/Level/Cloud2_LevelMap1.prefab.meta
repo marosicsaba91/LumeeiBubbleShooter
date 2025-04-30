@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 64a0111d722e14c5395b508894f80479
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/Particles/Level/Cloud2_LevelMap1.prefab
+  uploadId: 701269

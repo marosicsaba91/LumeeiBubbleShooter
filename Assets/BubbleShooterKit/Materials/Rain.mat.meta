@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e869e4dfdc5714c4487e95c5b637dc92
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Materials/Rain.mat
+  uploadId: 701269

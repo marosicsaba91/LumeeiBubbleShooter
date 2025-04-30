@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 4c12bbaf208bef34f9cb87b3b8a07316
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Scripts/Common/BaseScreen.cs
+  uploadId: 701269

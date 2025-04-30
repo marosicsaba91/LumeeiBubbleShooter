@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ecc00feaa1cf94a89b4aff63b84dbd1d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Resources/Popups/BuyLivesPopup.prefab
+  uploadId: 701269

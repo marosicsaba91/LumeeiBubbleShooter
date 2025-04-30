@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5bcb22ec57ef8e84895d37e8431b22ed
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 22100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/BasicBubbles/Bubble_Black.overrideController
+  uploadId: 701269

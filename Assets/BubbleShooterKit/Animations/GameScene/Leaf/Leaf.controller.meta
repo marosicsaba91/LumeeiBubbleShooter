@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e64c51be63857452ca90ff1c7ac8baec
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/Leaf/Leaf.controller
+  uploadId: 701269

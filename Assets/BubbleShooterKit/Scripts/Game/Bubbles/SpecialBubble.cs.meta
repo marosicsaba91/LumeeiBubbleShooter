@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d97dfe53ab6d4af4ea50fac89b23d32f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Scripts/Game/Bubbles/SpecialBubble.cs
+  uploadId: 701269

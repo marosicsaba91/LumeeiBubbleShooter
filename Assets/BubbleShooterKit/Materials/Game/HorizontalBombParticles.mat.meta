@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d7d2553f12da44db198af4c17ac1304c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Materials/Game/HorizontalBombParticles.mat
+  uploadId: 701269

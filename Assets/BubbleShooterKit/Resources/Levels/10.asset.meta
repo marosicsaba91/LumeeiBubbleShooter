@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5da41a84303694bb4a202ae357568f2d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Resources/Levels/10.asset
+  uploadId: 701269

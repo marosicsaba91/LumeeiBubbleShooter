@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3f224e8b28eb54446835ce599b70a5ef
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/Particles/Game/SphereParticles.prefab
+  uploadId: 701269

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dae9aa560b4242648a3affa2bfabc365
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Utilities/Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics.cs
+  uploadId: 701269

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dac522e5a7beb4196b9a94146d93f7ce
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/GameScene/Bomb/Enter3.anim
+  uploadId: 701269

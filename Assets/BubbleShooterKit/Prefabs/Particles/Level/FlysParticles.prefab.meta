@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7bed8d207d0a5402b9af9de9273cd7e2
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/Particles/Level/FlysParticles.prefab
+  uploadId: 701269

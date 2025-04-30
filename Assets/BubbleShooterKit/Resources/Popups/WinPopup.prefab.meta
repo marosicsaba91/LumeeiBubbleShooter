@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2a6690abccba74089a0dd7b223f11a0a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Resources/Popups/WinPopup.prefab
+  uploadId: 701269

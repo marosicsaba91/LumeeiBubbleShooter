@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: fccfc62abf2eb0a4db614853430894fd
+TextScriptImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Utilities/Plugins/Demigiant/DOTween/readme.txt
+  uploadId: 701269

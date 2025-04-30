@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e077f15f459f7d74ba541f09537687cf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Prefabs/BuyCoinsWidget.prefab
+  uploadId: 701269

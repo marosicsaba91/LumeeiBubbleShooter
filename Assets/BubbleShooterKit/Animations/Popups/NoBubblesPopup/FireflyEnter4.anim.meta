@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cc1f990198a804d6f89b0dcd532a6983
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Animations/Popups/NoBubblesPopup/FireflyEnter4.anim
+  uploadId: 701269

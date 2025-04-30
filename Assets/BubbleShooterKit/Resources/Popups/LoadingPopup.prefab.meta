@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2528c89ab594b4840a2635dbe315466a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124730
+  packageName: Bubble Shooter Kit
+  packageVersion: 2.5.0
+  assetPath: Assets/BubbleShooterKit/Resources/Popups/LoadingPopup.prefab
+  uploadId: 701269
