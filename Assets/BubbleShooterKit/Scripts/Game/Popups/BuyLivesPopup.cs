@@ -45,7 +45,7 @@ namespace BubbleShooterKit
         {
             base.Start();
             var maxLives = GameConfig.MaxLives;
-            var numLives = PlayerPrefs.GetInt("num_lives");
+            var numLives = UserManager.CurrentUser.lives;
             if (numLives >= maxLives)
                 DisableRefillButton();
             refillCostText.text = GameConfig.LivesRefillCost.ToString();

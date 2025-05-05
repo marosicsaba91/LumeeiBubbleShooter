@@ -25,8 +25,10 @@ namespace BubbleShooterKit
 
 		private void Awake()
 		{
-		    if (!PlayerPrefs.HasKey("num_lives"))
-			    PlayerPrefs.SetInt("num_lives", GameConfig.MaxLives);
+            if (!PlayerPrefs.HasKey("num_lives"))
+            {
+                PlayerPrefs.SetInt("num_lives", GameConfig.MaxLives);
+            }
 
 		    CheckLives();
 		}
@@ -44,7 +46,7 @@ namespace BubbleShooterKit
                 accTime = 0.0f;
                 timeSpan = timeSpan.Subtract(TimeSpan.FromSeconds(1));
                 SetTimeToNextLife((int)timeSpan.TotalSeconds);
-                var numLives = PlayerPrefs.GetInt("num_lives");
+                var numLives = UserManager.CurrentUser.lives;
 	            onCountdownUpdated?.Invoke(timeSpan, numLives);
 	            if ((int)timeSpan.TotalSeconds == 0)
                 {
@@ -75,7 +77,7 @@ namespace BubbleShooterKit
 		{
 		    isRunningCountdown = false;
 		    
-            var numLives = PlayerPrefs.GetInt("num_lives");
+            var numLives = UserManager.CurrentUser.lives;
 			var maxLives = GameConfig.MaxLives;
 			var timeToNextLife = GameConfig.TimeToNextLife;
 			if (numLives < maxLives && PlayerPrefs.HasKey("next_life_time"))
@@ -96,7 +98,8 @@ namespace BubbleShooterKit
                     numLives = numLives + livesToGive;
                     if (numLives > maxLives)
                         numLives = maxLives;
-                    PlayerPrefs.SetInt("num_lives", numLives);
+                    UserManager.CurrentUser.lives = numLives;
+                    UserManager.SaveUserData();
                     if (numLives < maxLives)
                         StartCountdown(timeToNextLife - ((int)remainingTime.TotalSeconds % timeToNextLife));
 	        
@@ -113,15 +116,15 @@ namespace BubbleShooterKit
 
             if (onCountdownUpdated == null)
                 return;
-	        
-            var numLives = PlayerPrefs.GetInt("num_lives");
+
+            var numLives = UserManager.CurrentUser.lives;
             onCountdownUpdated(timeSpan, numLives);
         }
 
 		private void StopCountdown()
         {
             isRunningCountdown = false;
-            var numLives = PlayerPrefs.GetInt("num_lives");
+            var numLives = UserManager.CurrentUser.lives;
 	        onCountdownFinished?.Invoke(numLives);
         }
 
@@ -136,7 +139,7 @@ namespace BubbleShooterKit
             onCountdownUpdated += updateCallback;
             onCountdownFinished += finishCallback;
             var maxLives = GameConfig.MaxLives;
-            var numLives = PlayerPrefs.GetInt("num_lives");
+            var numLives = UserManager.CurrentUser.lives;
             if (numLives < maxLives)
 	            onCountdownUpdated?.Invoke(timeSpan, numLives);
             else
@@ -156,7 +159,7 @@ namespace BubbleShooterKit
         {
             LivesSystem.AddLife(GameConfig);
 
-            var numLives = PlayerPrefs.GetInt("num_lives");
+            var numLives = UserManager.CurrentUser.lives;
             var maxLives = GameConfig.MaxLives;
             if (numLives < maxLives)
             {
@@ -176,7 +179,7 @@ namespace BubbleShooterKit
         {
 	        LivesSystem.RemoveLife(GameConfig);
 	        
-            var numLives = PlayerPrefs.GetInt("num_lives");
+            var numLives = UserManager.CurrentUser.lives;
             var maxLives = GameConfig.MaxLives;
             if (numLives < maxLives && !isRunningCountdown)
             {

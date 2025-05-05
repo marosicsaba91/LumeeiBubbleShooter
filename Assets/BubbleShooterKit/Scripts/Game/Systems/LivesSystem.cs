@@ -15,26 +15,29 @@ namespace BubbleShooterKit
     {
 	    public void AddLife(GameConfiguration gameConfig)
 	    {
-		    var numLives = PlayerPrefs.GetInt("num_lives");
+		    var numLives = UserManager.CurrentUser.lives;
 		    numLives += 1;
 		    if (numLives > gameConfig.MaxLives)
 			    numLives = gameConfig.MaxLives;
-		    PlayerPrefs.SetInt("num_lives", numLives);
-	    }
+            UserManager.CurrentUser.lives=numLives;
+			UserManager.SaveUserData(); 
+        }
 
 	    public void RemoveLife(GameConfiguration gameConfig)
 	    {
-		    var numLives = PlayerPrefs.GetInt("num_lives");
+		    var numLives = UserManager.CurrentUser.lives;
 		    numLives -= 1;
 		    if (numLives < 0)
-			    numLives = 0;
-		    PlayerPrefs.SetInt("num_lives", numLives);
-	    }
+			    numLives = 0; 
+            UserManager.CurrentUser.lives = numLives;
+            UserManager.SaveUserData();
+        }
 	    
 	    public void Refill(GameConfiguration gameConfig)
 	    {
 		    var amount = gameConfig.MaxLives;
-		    PlayerPrefs.SetInt("num_lives", amount);
-	    }
+            var numLives = UserManager.CurrentUser.lives;
+			UserManager.SaveUserData();
+        }
 	}
 }

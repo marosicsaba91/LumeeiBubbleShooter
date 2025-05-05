@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.marosi.easyeditor": {
+      "version": "https://github.com/marosicsaba91/EasyEditor.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b4dc384dc25aaed510ebadef9eafa4088d8cc06f"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

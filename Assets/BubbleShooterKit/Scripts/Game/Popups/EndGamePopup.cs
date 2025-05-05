@@ -48,7 +48,7 @@ namespace BubbleShooterKit
             var gameScreen = ParentScreen as GameScreen;
             if (gameScreen != null)
             {
-                var numLives = PlayerPrefs.GetInt("num_lives");
+                var numLives = UserManager.CurrentUser.lives;
                 if (numLives > 0)
                 {
                     gameScreen.GameLogic.RestartGame();

@@ -66,7 +66,7 @@ namespace BubbleShooterKit
             var targetPos = currentButton.transform.position + new Vector3(0, 1.0f, 0);
 
             LevelButton prevButton = null;
-            if (PlayerPrefs.GetInt("unlocked_next_level") == 1)
+            if (UserManager.CurrentUser.unlockedNextLevel == 1)
             {
                 foreach (var button in scrollView.GetComponentsInChildren<LevelButton>())
                 {

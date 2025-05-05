@@ -19,6 +19,7 @@ public class TestMenu : MonoBehaviour
     {
         Screen.fullScreen = !Screen.fullScreen;
     }
+
     void ChangeResolution()
     {
         //Switch between 1920x1080 and 1280x720

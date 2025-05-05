@@ -713,14 +713,16 @@ namespace BubbleShooterKit
                 if (levelInfo.Number == nextLevel)
                 {
                     PlayerPrefs.SetInt("next_level", levelInfo.Number + 1);
-                    PlayerPrefs.SetInt("unlocked_next_level", 1);
+					UserManager.CurrentUser.unlockedNextLevel = 1; 
                 }
                 else
                 {
-                    PlayerPrefs.SetInt("unlocked_next_level", 0);
+                    UserManager.CurrentUser.unlockedNextLevel = 0;
                 }
 
-				if (playerBubbles.NumBubblesLeft > 1)
+                UserManager.SaveUserData();
+
+                if (playerBubbles.NumBubblesLeft > 1)
 				{
 					gameScreen.OpenLevelCompletedAnimation();
 					playerBubbles.PlayEndOfGameSequence();
