@@ -6,7 +6,8 @@ public class TestMenu : MonoBehaviour
 {
     [SerializeField] Button fullScreenButton;
     [SerializeField] Button changeResolutionButton;
-    [SerializeField] TMP_Text infoText; 
+    [SerializeField] TMP_Text infoText;
+    [SerializeField] TMP_Text urlTest;
 
     void Awake()
     {
@@ -35,5 +36,6 @@ public class TestMenu : MonoBehaviour
     void Update()
     {
         infoText.text = Screen.currentResolution.ToString();
+        urlTest.text = Application.absoluteURL;
     }
 }
