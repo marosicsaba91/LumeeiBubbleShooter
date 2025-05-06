@@ -84,7 +84,7 @@ namespace BubbleShooterKit
                 SoundPlayer.PlaySoundFx("StarProgressBar");
             }
 
-            var offset = 165.0f;
+            float offset = 165.0f;
             star1Image.transform.localPosition = progressBarImage.transform.localPosition +
                                                  new Vector3(
                                                      progressBarImage.rectTransform.rect.width *
@@ -100,12 +100,12 @@ namespace BubbleShooterKit
         private int GetProgressValue(int value)
         {
             const int oldMin = 0;
-            var oldMax = star3;
+            int oldMax = star3;
             const int newMin = 0;
             const int newMax = 100;
-            var oldRange = oldMax - oldMin;
+            int oldRange = oldMax - oldMin;
             const int newRange = newMax - newMin;
-            var newValue = (((value - oldMin) * newRange) / oldRange) + newMin;
+            int newValue = (((value - oldMin) * newRange) / oldRange) + newMin;
             return newValue;
         }
     }

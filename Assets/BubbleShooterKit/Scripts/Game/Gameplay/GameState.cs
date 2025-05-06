@@ -16,8 +16,8 @@ namespace BubbleShooterKit
 		IEventListener<LeavesCollectedEvent>
 	{
 		public int Score;
-		public readonly Dictionary<ColorBubbleType, int> ExplodedBubbles = new Dictionary<ColorBubbleType, int>();
-		public readonly Dictionary<CollectableBubbleType, int> CollectedCollectables = new Dictionary<CollectableBubbleType, int>();
+		public readonly Dictionary<ColorBubbleType, int> ExplodedBubbles = new();
+		public readonly Dictionary<CollectableBubbleType, int> CollectedCollectables = new();
 		public int CollectedLeaves;
 
 		public GameState()
@@ -35,10 +35,10 @@ namespace BubbleShooterKit
 			CollectedCollectables.Clear();
 			CollectedLeaves = 0;
 
-			foreach (var value in Enum.GetValues(typeof(ColorBubbleType)))
+			foreach (object value in Enum.GetValues(typeof(ColorBubbleType)))
 				ExplodedBubbles.Add((ColorBubbleType)value, 0);
 			
-			foreach (var value in Enum.GetValues(typeof(CollectableBubbleType)))
+			foreach (object value in Enum.GetValues(typeof(CollectableBubbleType)))
 				CollectedCollectables.Add((CollectableBubbleType)value, 0);
 		}
 

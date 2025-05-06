@@ -34,7 +34,7 @@ namespace BubbleShooterKit
 	    protected override void Start()
 	    {
 	        base.Start();
-	        if (PlayerPrefs.GetInt("sound_enabled") == 1)
+	        if (UserManager.CurrentUser.soundEnabled)
     	        GetComponent<AudioSource>().Play();
 	    }
 
@@ -45,11 +45,10 @@ namespace BubbleShooterKit
 
         public void OnReplayButtonPressed()
         {
-            var gameScreen = ParentScreen as GameScreen;
+            GameScreen gameScreen = ParentScreen as GameScreen;
             if (gameScreen != null)
-            {
-                var numLives = UserManager.CurrentUser.lives;
-                if (numLives > 0)
+            { 
+                if (UserManager.CurrentUser.lives > 0)
                 {
                     gameScreen.GameLogic.RestartGame();
                     gameScreen.CloseTopCanvas();
@@ -69,10 +68,10 @@ namespace BubbleShooterKit
 
         public void SetGoals(List<LevelGoal> goals, GameState gameState, LevelGoalsWidget goalsWidget)
         {
-            var i = 0;
-            foreach (var goal in goals)
+            int i = 0;
+            foreach (LevelGoal goal in goals)
             {
-                var goalObject = Instantiate(endGameGoalWidgetPrefab);
+                GameObject goalObject = Instantiate(endGameGoalWidgetPrefab);
                 goalObject.transform.SetParent(goalGroup.transform, false);
                 goalObject.GetComponent<EndGameGoalWidget>().Initialize(
                     goal.IsComplete(gameState),

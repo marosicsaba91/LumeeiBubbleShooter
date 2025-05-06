@@ -1,199 +1,92 @@
-﻿// Copyright (C) 2018 gamevanilla. All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement,
-// a copy of which is available at http://unity3d.com/company/legal/as_terms.
-
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace BubbleShooterKit
 {
-	/// <summary>
-	/// This class manages the free-lives counter.
-	/// </summary>
-	public class CheckForFreeLives : MonoBehaviour
-	{
-		public GameConfiguration GameConfig;
-		public LivesSystem LivesSystem;
-		public CoinsSystem CoinsSystem;
-		
-        private Action<TimeSpan, int> onCountdownUpdated;
-        private Action<int> onCountdownFinished;
+    public class CheckForFreeLives : MonoBehaviour
+    {
+        public GameConfiguration GameConfig;
+        public CoinsSystem CoinsSystem;
 
-		private bool isRunningCountdown;
-		private float accTime;
-        private TimeSpan timeSpan;
+        public event Action<TimeSpan, int> onCountdownUpdated;
+        public event Action<int> onCountdownFinished;
 
-		private void Awake()
-		{
-            if (!PlayerPrefs.HasKey("num_lives"))
-            {
-                PlayerPrefs.SetInt("num_lives", GameConfig.MaxLives);
-            }
+        public TimeSpan TimeLeft => DateTime.Now - UserManager.CurrentUser.NextLifeTime;
+        TimeSpan lastTimeLeft;
 
-		    CheckLives();
-		}
-		
-		private void Update()
-		{
-            if (!isRunningCountdown)
-            {
-                return;
-            }
-
-            accTime += Time.deltaTime;
-            if (accTime >= 1.0f)
-            {
-                accTime = 0.0f;
-                timeSpan = timeSpan.Subtract(TimeSpan.FromSeconds(1));
-                SetTimeToNextLife((int)timeSpan.TotalSeconds);
-                var numLives = UserManager.CurrentUser.lives;
-	            onCountdownUpdated?.Invoke(timeSpan, numLives);
-	            if ((int)timeSpan.TotalSeconds == 0)
-                {
-                    StopCountdown();
-                    AddLife();
-                }
-            }
-		}
-		
-		private void OnApplicationPause(bool pauseStatus)
-		{
-			if (!pauseStatus)
-			{
-				CheckLives();
-			}
-		}
-
-		private void OnApplicationQuit()
-		{
-			var gameScreen = GameObject.Find("GameScreen");
-			if (gameScreen != null)
-			{
-				RemoveLife();
-			}
-		}
-
-		private void CheckLives()
-		{
-		    isRunningCountdown = false;
-		    
-            var numLives = UserManager.CurrentUser.lives;
-			var maxLives = GameConfig.MaxLives;
-			var timeToNextLife = GameConfig.TimeToNextLife;
-			if (numLives < maxLives && PlayerPrefs.HasKey("next_life_time"))
-			{
-                TimeSpan remainingTime;
-                var prevNextLifeTime = DateTime.FromBinary(Convert.ToInt64(PlayerPrefs.GetString("next_life_time")));
-				var now = DateTime.Now;
-				if (prevNextLifeTime > now)
-				{
-					remainingTime = prevNextLifeTime - now;
-                    if (numLives < maxLives)
-	                    StartCountdown((int)remainingTime.TotalSeconds);
-				}
-				else
-				{
-					remainingTime = now - prevNextLifeTime;
-					var livesToGive = ((int)remainingTime.TotalSeconds / timeToNextLife) + 1;
-                    numLives = numLives + livesToGive;
-                    if (numLives > maxLives)
-                        numLives = maxLives;
-                    UserManager.CurrentUser.lives = numLives;
-                    UserManager.SaveUserData();
-                    if (numLives < maxLives)
-                        StartCountdown(timeToNextLife - ((int)remainingTime.TotalSeconds % timeToNextLife));
-	        
-                    onCountdownFinished?.Invoke(numLives);
-				}
-			}
-		}
-
-		private void StartCountdown(int timeToNextLife)
+        void Awake()
         {
-            SetTimeToNextLife(timeToNextLife);
-            timeSpan = TimeSpan.FromSeconds(timeToNextLife);
-            isRunningCountdown = true;
+            lastTimeLeft = TimeLeft;
+        }
 
-            if (onCountdownUpdated == null)
+        void Update()
+        {
+            TimeSpan timeLeft = TimeLeft;
+            int lastLives = UserManager.CurrentUser.lives;
+            int currentLives = lastLives;
+            int maxLives = GameConfig.MaxLives;
+
+            if (currentLives >= maxLives)
                 return;
 
-            var numLives = UserManager.CurrentUser.lives;
-            onCountdownUpdated(timeSpan, numLives);
-        }
+            int timeToNextLife = GameConfig.TimeToNextLife;
+            DateTime nextLifeTime = UserManager.CurrentUser.NextLifeTime;
+            DateTime now = DateTime.Now;
+            TimeSpan remainingTime =  nextLifeTime - now;
 
-		private void StopCountdown()
-        {
-            isRunningCountdown = false;
-            var numLives = UserManager.CurrentUser.lives;
-	        onCountdownFinished?.Invoke(numLives);
-        }
-
-		private void SetTimeToNextLife(int seconds)
-		{
-            var nextLifeTime = DateTime.Now.Add(TimeSpan.FromSeconds(seconds));
-            PlayerPrefs.SetString("next_life_time", nextLifeTime.ToBinary().ToString());
-		}
-
-        public void Subscribe(Action<TimeSpan, int> updateCallback, Action<int> finishCallback)
-        {
-            onCountdownUpdated += updateCallback;
-            onCountdownFinished += finishCallback;
-            var maxLives = GameConfig.MaxLives;
-            var numLives = UserManager.CurrentUser.lives;
-            if (numLives < maxLives)
-	            onCountdownUpdated?.Invoke(timeSpan, numLives);
-            else
-	            onCountdownFinished?.Invoke(numLives);
-        }
-
-        public void Unsubscribe(Action<TimeSpan, int> updateCallback, Action<int> finishCallback)
-        {
-            if (onCountdownUpdated != null)
-                onCountdownUpdated -= updateCallback;
-	        
-            if (onCountdownFinished != null)
-                onCountdownFinished -= finishCallback;
-        }
-	    
-        public void AddLife()
-        {
-            LivesSystem.AddLife(GameConfig);
-
-            var numLives = UserManager.CurrentUser.lives;
-            var maxLives = GameConfig.MaxLives;
-            if (numLives < maxLives)
+            while (remainingTime.TotalSeconds < 0 && currentLives < maxLives)
             {
-                if (!isRunningCountdown)
-                {
-                    var timeToNextLife = GameConfig.TimeToNextLife;
-                    StartCountdown(timeToNextLife);
-                }
+                currentLives++;
+                remainingTime += TimeSpan.FromSeconds(timeToNextLife);
+                UserManager.CurrentUser.NextLifeTime = nextLifeTime.Add(TimeSpan.FromSeconds(timeToNextLife));
             }
-            else
+
+            if (currentLives == maxLives)
+                UserManager.CurrentUser.NextLifeTime = DateTime.Now;
+
+            if (remainingTime.TotalSeconds != lastTimeLeft.TotalSeconds)
+                onCountdownUpdated?.Invoke(remainingTime, currentLives);
+
+            if (currentLives != lastLives)
             {
-                StopCountdown();
+                UserManager.CurrentUser.lives = currentLives;
+                UserManager.TrySaveUserData();
+                onCountdownFinished?.Invoke(currentLives);
             }
         }
 
-        public void RemoveLife()
+        void OnApplicationQuit()
         {
-	        LivesSystem.RemoveLife(GameConfig);
-	        
-            var numLives = UserManager.CurrentUser.lives;
-            var maxLives = GameConfig.MaxLives;
-            if (numLives < maxLives && !isRunningCountdown)
-            {
-                var timeToNextLife = GameConfig.TimeToNextLife;
-                StartCountdown(timeToNextLife);
-            }
+            GameObject gameScreen = GameObject.Find("GameScreen");
+            if (gameScreen != null)
+                RemoveOneLife();
         }
-		
-        public void RefillLives()
+
+        public void RemoveOneLife()
         {
-	        LivesSystem.Refill(GameConfig);
-            var refillCost = GameConfig.LivesRefillCost;
-            CoinsSystem.SpendCoins(refillCost);
-            StopCountdown();
+            int lastLives = UserManager.CurrentUser.lives;
+            if (lastLives <= 0)
+                return;
+
+            int currentLives = lastLives - 1;
+            UserManager.CurrentUser.lives = currentLives;
+
+            int maxLives = GameConfig.MaxLives;
+            if (lastLives == maxLives && currentLives < maxLives)
+                JumpNextLifeTimeToNext();
+
+            UserManager.TrySaveUserData();
         }
-	}
+
+        public void RefillLives_ForCoins()
+        {
+            UserManager.CurrentUser.lives = GameConfig.MaxLives;
+            UserManager.CurrentUser.NextLifeTime = DateTime.Now;
+            CoinsSystem.SpendCoins(GameConfig.LivesRefillCost);
+        }
+        void JumpNextLifeTimeToNext()
+        {
+            UserManager.CurrentUser.NextLifeTime = DateTime.Now.Add(TimeSpan.FromSeconds(GameConfig.TimeToNextLife));
+        }
+    }
 }

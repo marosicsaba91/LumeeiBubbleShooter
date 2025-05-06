@@ -95,8 +95,8 @@ namespace BubbleShooterKit
 			if (shooting)
 			{
 				transform.position += shootDir * Speed * Time.deltaTime;
-				var leftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
-				var rightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0));
+                Vector3 leftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+                Vector3 rightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0));
 				if (transform.position.x - spriteRenderer.bounds.size.x / 2 <= leftEdge.x ||
 				    transform.position.x + spriteRenderer.bounds.size.x / 2 >= rightEdge.x)
 				{
@@ -107,7 +107,7 @@ namespace BubbleShooterKit
 
 		protected void OnTriggerEnter2D(Collider2D other)
 		{
-			var otherBubble = other.GetComponent<Bubble>();
+            Bubble otherBubble = other.GetComponent<Bubble>();
 			if (otherBubble != null)
 			{
 				CollidingWithAnotherBubble = true;

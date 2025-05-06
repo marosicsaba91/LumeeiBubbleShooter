@@ -12,15 +12,10 @@ namespace BubbleShooterKit
     [RequireComponent(typeof(AudioSource))]
     public class BackgroundMusic : MonoBehaviour
     {
-        private void Awake()
+        void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            if (PlayerPrefs.HasKey("music_enabled"))
-            {
-                var musicEnabled = PlayerPrefs.GetInt("music_enabled");
-                if (musicEnabled == 0)
-                    GetComponent<AudioSource>().mute = true;
-            }
+            GetComponent<AudioSource>().mute = !UserManager.CurrentUser.musicEnabled;
         }
     }
 }

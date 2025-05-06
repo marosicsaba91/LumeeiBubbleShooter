@@ -45,11 +45,11 @@ namespace Proyecto26.Common
             {
                 request.SetRequestHeader(CONTENT_TYPE_HEADER, contentType);
             }
-            foreach (var header in RestClient.DefaultRequestHeaders)
+            foreach (System.Collections.Generic.KeyValuePair<string, string> header in RestClient.DefaultRequestHeaders)
             {
                 request.SetRequestHeader(header.Key, header.Value);
             }
-            foreach (var header in options.Headers)
+            foreach (System.Collections.Generic.KeyValuePair<string, string> header in options.Headers)
             {
                 request.SetRequestHeader(header.Key, header.Value);
             }
@@ -90,7 +90,7 @@ namespace Proyecto26.Common
             }
             if (options.Body != null || !string.IsNullOrEmpty(options.BodyString))
             {
-                var bodyString = options.BodyString;
+                string bodyString = options.BodyString;
                 if (options.Body != null)
                 {
                     bodyString = JsonUtility.ToJson(options.Body);

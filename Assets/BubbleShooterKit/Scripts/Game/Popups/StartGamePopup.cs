@@ -47,8 +47,6 @@ namespace BubbleShooterKit
         [SerializeField]
         private GameObject playButton = null;
 
-        private int numLevel;
-
         protected override void Awake()
         {
             base.Awake();
@@ -65,12 +63,12 @@ namespace BubbleShooterKit
 
         public void LoadLevelData(int levelNum)
         {
-            numLevel = levelNum;
+            LevelManager.lastSelectedLevel = levelNum;
 
-            var level = FileUtils.LoadLevel(numLevel);
-            levelText.text = "Level " + numLevel;
+            LevelInfo level = FileUtils.LoadLevel(levelNum);
+            levelText.text = "Level " + levelNum;
             numBubblesText.text = level.NumBubbles.ToString();
-            var stars = PlayerPrefs.GetInt("level_stars_" + numLevel);
+            int stars = UserManager.CurrentUser.GetLevelStars(levelNum - 1);
             if (stars == 1)
             {
                 star1Image.sprite = enabledStarSprite;
@@ -87,39 +85,35 @@ namespace BubbleShooterKit
                 star3Image.sprite = enabledStarSprite;
             }
 
-            var randomColors = new List<ColorBubbleType>();
+            List<ColorBubbleType> randomColors = new();
             randomColors.AddRange(level.AvailableColors);
             randomColors.Shuffle();
 
-            PlayerPrefs.SetInt("num_available_colors", randomColors.Count);
-            for (var i = 0; i < randomColors.Count; i++)
-            {
-                var color = randomColors[i];
-                PlayerPrefs.SetInt($"available_colors_{i}", (int)color);
-            }
+            LevelManager.availableColors.Clear();
+            LevelManager.availableColors.AddRange(randomColors);
 
-            foreach (var goal in level.Goals)
+            foreach (LevelGoal goal in level.Goals)
             {
-                var goalItem = Instantiate(goalPrefab);
+                GameObject goalItem = Instantiate(goalPrefab);
                 goalItem.transform.SetParent(goalGroup.transform, false);
                 if (goal is CollectBubblesGoal)
                 {
-                    var concreteGoal = (CollectBubblesGoal)goal;
+                    CollectBubblesGoal concreteGoal = (CollectBubblesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(ColorBubbleSprites[(int)concreteGoal.Type], concreteGoal.Amount);
                 }
                 else if (goal is CollectRandomBubblesGoal)
                 {
-                    var concreteGoal = (CollectRandomBubblesGoal)goal;
+                    CollectRandomBubblesGoal concreteGoal = (CollectRandomBubblesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(ColorBubbleSprites[(int)randomColors[(int)concreteGoal.Type]], concreteGoal.Amount);
                 }
                 else if (goal is CollectCollectablesGoal)
                 {
-                    var concreteGoal = (CollectCollectablesGoal)goal;
+                    CollectCollectablesGoal concreteGoal = (CollectCollectablesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(CollectableBubbleSprites[(int)concreteGoal.Type], concreteGoal.Amount);
                 }
                 else if (goal is CollectLeavesGoal)
                 {
-                    var concreteGoal = (CollectLeavesGoal)goal;
+                    CollectLeavesGoal concreteGoal = (CollectLeavesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(LeafSprite, concreteGoal.Amount);
                 }
             }
@@ -127,7 +121,6 @@ namespace BubbleShooterKit
 
         public void OnPlayButtonPressed()
         {
-            PlayerPrefs.SetInt("last_selected_level", numLevel);
             GetComponent<ScreenTransition>().PerformTransition();
         }
     }

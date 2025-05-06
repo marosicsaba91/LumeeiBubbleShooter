@@ -45,34 +45,28 @@ namespace BubbleShooterKit
         protected override void Start()
         {
             base.Start();
-            soundSlider.value = PlayerPrefs.GetInt("sound_enabled");
-            musicSlider.value = PlayerPrefs.GetInt("music_enabled");
+            soundSlider.value = UserManager.CurrentUser.soundEnabled ? 0 : 1;
+            musicSlider.value = UserManager.CurrentUser.musicEnabled ? 0 : 1;
         }
 
         public void OnResetProgressButtonPressed()
         {
-            PlayerPrefs.SetInt("last_selected_level", 0);
-            PlayerPrefs.SetInt("next_level", 0);
-            for (var i = 1; i <= 30; i++)
-            {
-                PlayerPrefs.DeleteKey($"level_stars_{i}");
-            }
+            LevelManager.lastSelectedLevel = 0;
+            UserManager.CurrentUser.levelData.Clear();
             resetProgressImage.sprite = resetProgressDisabledSprite;
             resetProgressButton.Interactable = false;
         }
 
         public void OnSoundSliderValueChanged()
         {
-            currentSound = (int)soundSlider.value;
-            SoundPlayer.SetSoundEnabled(currentSound == 1);
-            PlayerPrefs.SetInt("sound_enabled", currentSound);
+            User user = UserManager.CurrentUser;
+            user.soundEnabled = Mathf.RoundToInt(soundSlider.value) == 1;
         }
 
         public void OnMusicSliderValueChanged()
         {
-            currentMusic = (int)musicSlider.value;
-            SoundPlayer.SetMusicEnabled(currentMusic == 1);
-            PlayerPrefs.SetInt("music_enabled", currentMusic);
+            User user = UserManager.CurrentUser;
+            user.musicEnabled = Mathf.RoundToInt(musicSlider.value) == 1;
         }
 	}
 }

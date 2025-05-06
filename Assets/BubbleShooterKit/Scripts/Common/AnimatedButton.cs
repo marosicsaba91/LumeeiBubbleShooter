@@ -24,7 +24,7 @@ namespace BubbleShooterKit
         public bool Interactable = true;
 
         [SerializeField]
-        private ButtonClickedEvent onClick = new ButtonClickedEvent();
+        private ButtonClickedEvent onClick = new();
 
         private Animator animator;
 

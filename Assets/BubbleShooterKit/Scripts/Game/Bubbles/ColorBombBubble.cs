@@ -13,13 +13,13 @@ namespace BubbleShooterKit
 	{
 		public override List<Bubble> Resolve(Level level, Bubble shotBubble)
 		{
-	        var bubblesToExplode = new List<Bubble>();
+            List<Bubble> bubblesToExplode = new();
 
 			if (shotBubble.GetComponent<ColorBubble>() != null)
 			{
-				foreach (var row in level.Tiles)
+				foreach (List<Bubble> row in level.Tiles)
 				{
-					foreach (var bubble in row)
+					foreach (Bubble bubble in row)
 					{
 						if (bubble != null &&
 						    bubble.GetComponent<ColorBubble>() != null &&

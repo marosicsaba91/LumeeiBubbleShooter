@@ -14,7 +14,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Request(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Request(options, promise.Promisify);
             return promise;
         }
@@ -27,7 +27,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the response.</typeparam>
         public static IPromise<T> Request<T>(RequestHelper options)
         {
-            var promise = new Promise<T>();
+            Promise<T> promise = new();
             Request<T>(options, promise.Promisify);
             return promise;
         }
@@ -49,7 +49,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Get(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Get(options, promise.Promisify);
             return promise;
         }
@@ -73,7 +73,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the response.</typeparam>
         public static IPromise<T> Get<T>(RequestHelper options)
         {
-            var promise = new Promise<T>();
+            Promise<T> promise = new();
             Get<T>(options, promise.Promisify);
             return promise;
         }
@@ -97,7 +97,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the array.</typeparam>
         public static IPromise<T[]> GetArray<T>(RequestHelper options)
         {
-            var promise = new Promise<T[]>();
+            Promise<T[]> promise = new();
             GetArray<T>(options, promise.Promisify);
             return promise;
         }
@@ -131,7 +131,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Post(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Post(options, promise.Promisify);
             return promise;
         }
@@ -168,7 +168,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the response.</typeparam>
         public static IPromise<T> Post<T>(RequestHelper options)
         {
-            var promise = new Promise<T>();
+            Promise<T> promise = new();
             Post<T>(options, promise.Promisify);
             return promise;
         }
@@ -205,7 +205,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the array.</typeparam>
         public static IPromise<T[]> PostArray<T>(RequestHelper options)
         {
-            var promise = new Promise<T[]>();
+            Promise<T[]> promise = new();
             PostArray<T>(options, promise.Promisify);
             return promise;
         }
@@ -239,7 +239,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Put(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Put(options, promise.Promisify);
             return promise;
         }
@@ -276,7 +276,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the response.</typeparam>
         public static IPromise<T> Put<T>(RequestHelper options)
         {
-            var promise = new Promise<T>();
+            Promise<T> promise = new();
             Put<T>(options, promise.Promisify);
             return promise;
         }
@@ -310,7 +310,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Patch(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Patch(options, promise.Promisify);
             return promise;
         }
@@ -347,7 +347,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the response.</typeparam>
         public static IPromise<T> Patch<T>(RequestHelper options)
         {
-            var promise = new Promise<T>();
+            Promise<T> promise = new();
             Patch<T>(options, promise.Promisify);
             return promise;
         }
@@ -369,7 +369,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Delete(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Delete(options, promise.Promisify);
             return promise;
         }
@@ -391,7 +391,7 @@ namespace Proyecto26
         /// <param name="options">The options of the request.</param>
         public static IPromise<ResponseHelper> Head(RequestHelper options)
         {
-            var promise = new Promise<ResponseHelper>();
+            Promise<ResponseHelper> promise = new();
             Head(options, promise.Promisify);
             return promise;
         }

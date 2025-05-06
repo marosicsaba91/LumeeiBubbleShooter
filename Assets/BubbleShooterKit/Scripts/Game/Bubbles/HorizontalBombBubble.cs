@@ -13,11 +13,11 @@ namespace BubbleShooterKit
     {
         public override List<Bubble> Resolve(Level level, Bubble shotBubble)
         {
-	        var bubblesToExplode = new List<Bubble>();
+            List<Bubble> bubblesToExplode = new();
 
-	        for (var i = 0; i < level.Tiles[Row].Count; i++)
+	        for (int i = 0; i < level.Tiles[Row].Count; i++)
 	        {
-		        var bubble = level.Tiles[Row][i];
+                Bubble bubble = level.Tiles[Row][i];
 		        if (bubble != null)
 			        bubblesToExplode.Add(bubble);
 	        }

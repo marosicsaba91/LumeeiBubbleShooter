@@ -119,7 +119,7 @@ namespace RSG
         /// <summary>
         /// Currently pending promises
         /// </summary>
-        private readonly LinkedList<PredicateWait> waiting = new LinkedList<PredicateWait>();
+        private readonly LinkedList<PredicateWait> waiting = new();
 
         /// <summary>
         /// Resolve the returned promise once the time has elapsed
@@ -142,9 +142,9 @@ namespace RSG
         /// </summary>
         public IPromise WaitUntil(Func<TimeData, bool> predicate)
         {
-            var promise = new Promise();
+            Promise promise = new();
 
-            var wait = new PredicateWait()
+            PredicateWait wait = new()
             {
                 timeStarted = curTime,
                 pendingPromise = promise,
@@ -160,7 +160,7 @@ namespace RSG
 
         public bool Cancel(IPromise promise)
         {
-            var node = FindInWaiting(promise);
+            LinkedListNode<PredicateWait> node = FindInWaiting(promise);
 
             if (node == null)
             {
@@ -175,7 +175,7 @@ namespace RSG
 
         LinkedListNode<PredicateWait> FindInWaiting(IPromise promise)
         {
-            for (var node = waiting.First; node != null; node = node.Next)
+            for (LinkedListNode<PredicateWait> node = waiting.First; node != null; node = node.Next)
             {
                 if (node.Value.pendingPromise.Id.Equals(promise.Id))
                 {
@@ -194,15 +194,15 @@ namespace RSG
             curTime += deltaTime;
             curFrame += 1;
 
-            var node = waiting.First;
+            LinkedListNode<PredicateWait> node = waiting.First;
             while (node != null)
             {
-                var wait = node.Value;
+                PredicateWait wait = node.Value;
 
-                var newElapsedTime = curTime - wait.timeStarted;
+                float newElapsedTime = curTime - wait.timeStarted;
                 wait.timeData.deltaTime = newElapsedTime - wait.timeData.elapsedTime;
                 wait.timeData.elapsedTime = newElapsedTime;
-                var newElapsedUpdates = curFrame - wait.frameStarted;
+                int newElapsedUpdates = curFrame - wait.frameStarted;
                 wait.timeData.elapsedUpdates = newElapsedUpdates;
 
                 bool result;
@@ -236,7 +236,7 @@ namespace RSG
         /// </summary>
         private LinkedListNode<PredicateWait> RemoveNode(LinkedListNode<PredicateWait> node)
         {
-            var currentNode = node;
+            LinkedListNode<PredicateWait> currentNode = node;
             node = node.Next;
 
             waiting.Remove(currentNode);

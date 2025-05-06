@@ -44,22 +44,22 @@ namespace BubbleShooterKit
         protected override void Start()
         {
             base.Start();
-            var maxLives = GameConfig.MaxLives;
-            var numLives = UserManager.CurrentUser.lives;
-            if (numLives >= maxLives)
+            int maxLives = GameConfig.MaxLives; 
+            if (UserManager.CurrentUser.lives >= maxLives)
                 DisableRefillButton();
             refillCostText.text = GameConfig.LivesRefillCost.ToString();
         }
 
         public void OnRefillButtonPressed()
         {
-            var numCoins = PlayerPrefs.GetInt("num_coins");
+            int numCoins = UserManager.CurrentUser.coins;
             if (numCoins >= GameConfig.LivesRefillCost)
             {
-                var freeLivesChecker = FindFirstObjectByType<CheckForFreeLives>();
+                CheckForFreeLives freeLivesChecker = FindFirstObjectByType<CheckForFreeLives>();
                 if (freeLivesChecker != null)
                 {
-                    freeLivesChecker.RefillLives();
+                    freeLivesChecker.RefillLives_ForCoins();
+
                     livesParticles.Play();
                     //SoundManager.instance.PlaySound("BuyPopButton");
                     DisableRefillButton();
@@ -67,7 +67,7 @@ namespace BubbleShooterKit
             }
             else
             {
-                var screen = ParentScreen;
+                BaseScreen screen = ParentScreen;
                 if (screen != null)
                 {
                     screen.CloseCurrentPopup();

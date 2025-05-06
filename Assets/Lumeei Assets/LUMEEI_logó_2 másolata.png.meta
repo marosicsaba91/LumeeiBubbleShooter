@@ -210,7 +210,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "LUMEEI_log\xF3_2 m\xE1solata_0": 1563533157747688441
+      "LUMEEI_log\xF3_2 m\xE1solata_1": -2160199958721800355
+      "LUMEEI_log\xF3_2 m\xE1solata_2": -418957576229277680
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

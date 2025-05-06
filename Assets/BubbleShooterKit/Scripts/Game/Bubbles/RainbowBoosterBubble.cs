@@ -13,8 +13,8 @@ namespace BubbleShooterKit
 	{
 		public override List<Bubble> Resolve(Level level, Bubble shotBubble, Bubble touchedBubble)
 		{
-			var bubblesToExplode = new List<Bubble>();
-			var touchedColorBubble = touchedBubble.GetComponent<ColorBubble>();
+            List<Bubble> bubblesToExplode = new();
+            ColorBubble touchedColorBubble = touchedBubble.GetComponent<ColorBubble>();
 			if (touchedColorBubble != null)
 				bubblesToExplode.AddRange(LevelUtils.GetMatches(level, touchedColorBubble));
 			bubblesToExplode.Add(this);

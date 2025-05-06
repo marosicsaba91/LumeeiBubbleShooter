@@ -128,8 +128,8 @@ public class MainScript : MonoBehaviour {
 
 	public void DownloadFile(){
 
-		var fileUrl = "https://raw.githubusercontent.com/IonDen/ion.sound/master/sounds/bell_ring.ogg";
-		var fileType = AudioType.OGGVORBIS;
+        string fileUrl = "https://raw.githubusercontent.com/IonDen/ion.sound/master/sounds/bell_ring.ogg";
+        AudioType fileType = AudioType.OGGVORBIS;
 
 		RestClient.Get(new RequestHelper {
 			Uri = fileUrl,

@@ -19,8 +19,8 @@ namespace BubbleShooterKit
             if (!floating)
                 return;
 
-            var deltaHeight = Mathf.Sin(runningTime + Time.deltaTime);
-            var newPos = transform.position;
+            float deltaHeight = Mathf.Sin(runningTime + Time.deltaTime);
+            Vector3 newPos = transform.position;
             newPos.y += deltaHeight * 0.002f;
             transform.position = newPos;
             runningTime += Time.deltaTime * 2;

@@ -36,7 +36,7 @@ namespace BubbleShooterKit
 		
 		public void PlayParticleFx()
 		{
-			var particles = FxPool.LeafParticlePool.GetObject();
+            GameObject particles = FxPool.LeafParticlePool.GetObject();
 			particles.transform.position = transform.position;
 		}
 

@@ -119,29 +119,29 @@ namespace BubbleShooterKit
 			if (isPlayingEndGameSequence)
 				return;
 
-			var primaryBubblePos = primaryBubble.transform.position;
-			var secondaryBubblePos = secondaryBubble.transform.position;
-			
-			var waypointsSecondary = new []
+            Vector3 primaryBubblePos = primaryBubble.transform.position;
+            Vector3 secondaryBubblePos = secondaryBubble.transform.position;
+
+            Vector3[] waypointsSecondary = new []
 			{
 				secondaryBubblePos,
 				secondaryBubblePos + new Vector3(1.5f, 0.5f, 0),
 				primaryBubblePos
 			};
 			secondaryBubble.transform.DOPath(waypointsSecondary, 0.2f, PathType.CatmullRom);
-			
-			var waypointsPrimary = new []
+
+            Vector3[] waypointsPrimary = new []
 			{
 				primaryBubblePos,
 				primaryBubblePos - new Vector3(1.5f, 0.5f, 0),
 				secondaryBubblePos
 			};
-			var seq = DOTween.Sequence();
+            Sequence seq = DOTween.Sequence();
 			seq.AppendCallback(() => { swappingBubbles = true; });
 			seq.Append(primaryBubble.transform.DOPath(waypointsPrimary, 0.2f, PathType.CatmullRom));
 			seq.AppendCallback(() =>
 			{
-				var tempBubble = primaryBubble;
+                GameObject tempBubble = primaryBubble;
 				primaryBubble = secondaryBubble;
 				secondaryBubble = tempBubble;
 				currentBubble = primaryBubble;
@@ -184,18 +184,18 @@ namespace BubbleShooterKit
 			
 			yield return new WaitForSeconds(delay);
 
-			var primaryWorldPos = CanvasUtils.CanvasToWorldPoint(primaryBubblePivot);
-			var primaryBubblePos = new Vector3(primaryWorldPos.x, primaryWorldPos.y, 0);
-			var secondaryWorldPos = CanvasUtils.CanvasToWorldPoint(secondaryBubblePivot);
-			var secondaryBubblePos = new Vector3(secondaryWorldPos.x, secondaryWorldPos.y, 0);
-			
-			var waypointsSecondary = new []
+            Vector2 primaryWorldPos = CanvasUtils.CanvasToWorldPoint(primaryBubblePivot);
+            Vector3 primaryBubblePos = new(primaryWorldPos.x, primaryWorldPos.y, 0);
+            Vector2 secondaryWorldPos = CanvasUtils.CanvasToWorldPoint(secondaryBubblePivot);
+            Vector3 secondaryBubblePos = new(secondaryWorldPos.x, secondaryWorldPos.y, 0);
+
+            Vector3[] waypointsSecondary = new []
 			{
 				secondaryBubblePos,
 				secondaryBubblePos + new Vector3(1.5f, 0.5f, 0),
 				primaryBubblePos
 			};
-			var seq = DOTween.Sequence();
+            Sequence seq = DOTween.Sequence();
 			seq.Append(secondaryBubble.transform.DOPath(waypointsSecondary, 0.2f, PathType.CatmullRom));
 			seq.AppendCallback(() =>
 			{
@@ -209,17 +209,17 @@ namespace BubbleShooterKit
 
 		private void CreateNextSecondaryBubble()
 		{
-			var secondaryWorldPos = CanvasUtils.CanvasToWorldPoint(secondaryBubblePivot);
-			var secondaryBubblePos = new Vector3(secondaryWorldPos.x, secondaryWorldPos.y, 0);
+            Vector2 secondaryWorldPos = CanvasUtils.CanvasToWorldPoint(secondaryBubblePivot);
+            Vector3 secondaryBubblePos = new(secondaryWorldPos.x, secondaryWorldPos.y, 0);
 			secondaryBubble = BubbleFactory.CreateRandomColorBubble();
 			secondaryBubble.transform.position = secondaryBubblePos - new Vector3(2.0f, 0, 0);
-			var waypointsSecondary = new []
+            Vector3[] waypointsSecondary = new []
 			{
 				secondaryBubblePos - new Vector3(2.0f, 0, 0),
 				secondaryBubblePos + new Vector3(-1.0f, 0.5f, 0),
 				secondaryBubblePos
 			};
-			var seq = DOTween.Sequence();
+            Sequence seq = DOTween.Sequence();
 			seq.Append(secondaryBubble.transform.DOPath(waypointsSecondary, 0.2f, PathType.CatmullRom));
 			seq.AppendCallback(() => { spawningNextBubbles = false; });
 		}
@@ -242,7 +242,7 @@ namespace BubbleShooterKit
 			Fox.PlayShootingAnimation();
 			
 			LastShotDir = shootDir;
-			var newPos = currentBubble.transform.position;
+            Vector3 newPos = currentBubble.transform.position;
 			newPos.y = hitPoint.y;
 			currentBubble.transform.position = newPos;
 			currentBubble.GetComponent<Bubble>().Shoot(shootDir);
@@ -287,12 +287,12 @@ namespace BubbleShooterKit
 
 			primaryBubble.GetComponent<Bubble>().SetColliderEnabled(false);
 
-			var energyBubble = BubblePool.EnergyBubblePool.GetObject();
+            GameObject energyBubble = BubblePool.EnergyBubblePool.GetObject();
 			energyBubble.GetComponent<SpecialBubble>().GameLogic = GameLogic;
 			energyBubble.transform.position = CanvasUtils.CanvasToWorldPoint(EnergyOrbFill.rectTransform);
-			var primaryBubbleWorldPos = CanvasUtils.CanvasToWorldPoint(primaryBubblePivot);
-			var primaryBubblePos = new Vector3(primaryBubbleWorldPos.x, primaryBubbleWorldPos.y, 0);
-			var waypoints = new []
+            Vector2 primaryBubbleWorldPos = CanvasUtils.CanvasToWorldPoint(primaryBubblePivot);
+            Vector3 primaryBubblePos = new(primaryBubbleWorldPos.x, primaryBubbleWorldPos.y, 0);
+            Vector3[] waypoints = new []
 			{
 				energyBubble.transform.position,
 				energyBubble.transform.position + new Vector3(-1.5f, 0.5f, 0),
@@ -328,7 +328,7 @@ namespace BubbleShooterKit
 				case PurchasableBoosterBubbleType.RainbowBubble:
 				case PurchasableBoosterBubbleType.HorizontalBomb:
 				case PurchasableBoosterBubbleType.CircleBomb:
-					var bubble = BubblePool.PurchasableBoosterBubblePools[(int)bubbleType].GetObject();
+                    GameObject bubble = BubblePool.PurchasableBoosterBubblePools[(int)bubbleType].GetObject();
 					bubble.GetComponent<Bubble>().GameLogic = GameLogic;
 					bubble.transform.position = primaryBubble.transform.position;
 					currentBubble = bubble;
@@ -376,7 +376,7 @@ namespace BubbleShooterKit
 			
 			while (NumBubblesLeft >= 1)
 			{
-				var seq = DOTween.Sequence();
+                Sequence seq = DOTween.Sequence();
 				seq.AppendCallback(() =>
 				{
 					GameLogic.DestroyBubble(primaryBubble.GetComponent<ColorBubble>());

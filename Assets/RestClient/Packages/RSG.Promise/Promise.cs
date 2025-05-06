@@ -529,7 +529,7 @@ namespace RSG
         /// </summary>
         public IPromise Catch(Action<Exception> onRejected)
         {
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName(Name);
 
             Action<PromisedT> resolveHandler = _ => resultPromise.Resolve();
@@ -558,7 +558,7 @@ namespace RSG
         /// </summary>
         public IPromise<PromisedT> Catch(Func<Exception, PromisedT> onRejected)
         {
-            var resultPromise = new Promise<PromisedT>();
+            Promise<PromisedT> resultPromise = new();
             resultPromise.WithName(Name);
 
             Action<PromisedT> resolveHandler = v => resultPromise.Resolve(v);
@@ -647,9 +647,9 @@ namespace RSG
         {
             // This version of the function must supply an onResolved.
             // Otherwise there is now way to get the converted value to pass to the resulting promise.
-//            Argument.NotNull(() => onResolved); 
+            //            Argument.NotNull(() => onResolved); 
 
-            var resultPromise = new Promise<ConvertedT>();
+            Promise<ConvertedT> resultPromise = new();
             resultPromise.WithName(Name);
 
             Action<PromisedT> resolveHandler = v =>
@@ -700,7 +700,7 @@ namespace RSG
         /// </summary>
         public IPromise Then(Func<PromisedT, IPromise> onResolved, Action<Exception> onRejected, Action<float> onProgress)
         {
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName(Name);
 
             Action<PromisedT> resolveHandler = v =>
@@ -744,7 +744,7 @@ namespace RSG
         /// </summary>
         public IPromise Then(Action<PromisedT> onResolved, Action<Exception> onRejected, Action<float> onProgress)
         {
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName(Name);
 
             Action<PromisedT> resolveHandler = v =>
@@ -854,16 +854,16 @@ namespace RSG
         /// </summary>
         public static IPromise<IEnumerable<PromisedT>> All(IEnumerable<IPromise<PromisedT>> promises)
         {
-            var promisesArray = promises.ToArray();
+            IPromise<PromisedT>[] promisesArray = promises.ToArray();
             if (promisesArray.Length == 0)
             {
                 return Promise<IEnumerable<PromisedT>>.Resolved(Enumerable.Empty<PromisedT>());
             }
 
-            var remainingCount = promisesArray.Length;
-            var results = new PromisedT[remainingCount];
-            var progress = new float[remainingCount];
-            var resultPromise = new Promise<IEnumerable<PromisedT>>();
+            int remainingCount = promisesArray.Length;
+            PromisedT[] results = new PromisedT[remainingCount];
+            float[] progress = new float[remainingCount];
+            Promise<IEnumerable<PromisedT>> resultPromise = new();
             resultPromise.WithName("All");
 
             promisesArray.Each((promise, index) =>
@@ -939,7 +939,7 @@ namespace RSG
         /// </summary>
         public static IPromise<PromisedT> Race(IEnumerable<IPromise<PromisedT>> promises)
         {
-            var promisesArray = promises.ToArray();
+            IPromise<PromisedT>[] promisesArray = promises.ToArray();
             if (promisesArray.Length == 0)
             {
                 throw new InvalidOperationException(
@@ -947,10 +947,10 @@ namespace RSG
                 );
             }
 
-            var resultPromise = new Promise<PromisedT>();
+            Promise<PromisedT> resultPromise = new();
             resultPromise.WithName("Race");
 
-            var progress = new float[promisesArray.Length];
+            float[] progress = new float[promisesArray.Length];
 
             promisesArray.Each((promise, index) =>
             {
@@ -989,7 +989,7 @@ namespace RSG
         /// </summary>
         public static IPromise<PromisedT> Resolved(PromisedT promisedValue)
         {
-            var promise = new Promise<PromisedT>();
+            Promise<PromisedT> promise = new();
             promise.Resolve(promisedValue);
             return promise;
         }
@@ -999,16 +999,16 @@ namespace RSG
         /// </summary>
         public static IPromise<PromisedT> Rejected(Exception ex)
         {
-//            Argument.NotNull(() => ex);
+            //            Argument.NotNull(() => ex);
 
-            var promise = new Promise<PromisedT>();
+            Promise<PromisedT> promise = new();
             promise.Reject(ex);
             return promise;
         }
 
         public IPromise<PromisedT> Finally(Action onComplete)
         {
-            var promise = new Promise<PromisedT>();
+            Promise<PromisedT> promise = new();
             promise.WithName(Name);
 
             this.Then(x => promise.Resolve(x));
@@ -1030,7 +1030,7 @@ namespace RSG
 
         public IPromise ContinueWith(Func<IPromise> onComplete)
         {
-            var promise = new Promise();
+            Promise promise = new();
             promise.WithName(Name);
 
             this.Then(x => promise.Resolve());
@@ -1041,7 +1041,7 @@ namespace RSG
 
         public IPromise<ConvertedT> ContinueWith<ConvertedT>(Func<IPromise<ConvertedT>> onComplete)
         {
-            var promise = new Promise();
+            Promise promise = new();
             promise.WithName(Name);
 
             this.Then(x => promise.Resolve());

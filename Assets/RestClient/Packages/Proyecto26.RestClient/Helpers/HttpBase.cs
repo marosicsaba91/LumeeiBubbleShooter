@@ -13,10 +13,10 @@ namespace Proyecto26
         public static IEnumerator CreateRequestAndRetry(RequestHelper options, Action<RequestException, ResponseHelper> callback)
         {
 
-            var retries = 0;
+            int retries = 0;
             do
             {
-                using (var request = CreateRequest(options))
+                using (UnityWebRequest request = CreateRequest(options))
                 {
                     bool IsNetworkError;
 #if UNITY_2020_2_OR_NEWER
@@ -24,7 +24,7 @@ namespace Proyecto26
 #else
                     IsNetworkError = request.isNetworkError;
 #endif
-                    var sendRequest = request.SendWebRequestWithOptions(options);
+                    AsyncOperation sendRequest = request.SendWebRequestWithOptions(options);
                     if (options.ProgressCallback == null)
                     {
                         yield return sendRequest;
@@ -41,7 +41,7 @@ namespace Proyecto26
 
                         options.ProgressCallback(1);
                     }
-                    var response = request.CreateWebResponse();
+                    ResponseHelper response = request.CreateWebResponse();
                     if (request.IsValidRequest(options))
                     {
                         DebugLog(options.EnableDebug, string.Format("RestClient - Response\nUrl: {0}\nMethod: {1}\nStatus: {2}\nResponse: {3}", options.Uri, options.Method, request.responseCode, options.ParseResponseBody ? response.Text : "body not parsed"), false);
@@ -60,7 +60,7 @@ namespace Proyecto26
                     }
                     else
                     {
-                        var err = CreateException(options, request);
+                        RequestException err = CreateException(options, request);
                         DebugLog(options.EnableDebug, err, true);
                         callback(err, response);
                         break;
@@ -72,7 +72,7 @@ namespace Proyecto26
 
         private static UnityWebRequest CreateRequest(RequestHelper options)
         {
-            var url = options.Uri.BuildUrl(options.Params);
+            string url = options.Uri.BuildUrl(options.Params);
             DebugLog(options.EnableDebug, string.Format("RestClient - Request\nUrl: {0}", url), false);
             if (options.FormData is WWWForm && options.Method == UnityWebRequest.kHttpVerbPOST)
             {
@@ -117,7 +117,7 @@ namespace Proyecto26
         public static IEnumerator DefaultUnityWebRequest<TResponse>(RequestHelper options, Action<RequestException, ResponseHelper, TResponse> callback)
         {
             return CreateRequestAndRetry(options, (RequestException err, ResponseHelper res) => {
-                var body = default(TResponse);
+                TResponse body = default(TResponse);
                 try
                 {
                     if (err == null && res.StatusCode != HTTP_NO_CONTENT && res.Data != null && options.ParseResponseBody)
@@ -138,7 +138,7 @@ namespace Proyecto26
         public static IEnumerator DefaultUnityWebRequest<TResponse>(RequestHelper options, Action<RequestException, ResponseHelper, TResponse[]> callback)
         {
             return CreateRequestAndRetry(options, (RequestException err, ResponseHelper res) => {
-                var body = default(TResponse[]);
+                TResponse[] body = default(TResponse[]);
                 try
                 {
                     if (err == null && res.StatusCode != HTTP_NO_CONTENT && res.Data != null && options.ParseResponseBody)

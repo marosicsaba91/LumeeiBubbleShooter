@@ -13,7 +13,7 @@ namespace BubbleShooterKit
 
 		public override void ShowExplosionFx(FxPool fxPool)
 		{
-			var fx = fxPool.GetCollectableBubbleParticlePool(Type).GetObject();
+            UnityEngine.GameObject fx = fxPool.GetCollectableBubbleParticlePool(Type).GetObject();
 			fx.transform.position = transform.position;
 		}
 	}

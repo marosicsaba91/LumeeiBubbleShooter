@@ -14,11 +14,11 @@ namespace BubbleShooterKit
     public static class EventManager
     {
         private static readonly Dictionary<Type, List<IBaseEventListener>> RegisteredListeners =
-            new Dictionary<Type, List<IBaseEventListener>>();
+            new();
 
         public static void RegisterListener<T>(IEventListener<T> listener) where T : struct
         {
-            var type = typeof(T);
+            Type type = typeof(T);
 
             if (!RegisteredListeners.ContainsKey(type))
                 RegisteredListeners.Add(type, new List<IBaseEventListener>());
@@ -28,16 +28,16 @@ namespace BubbleShooterKit
 
         public static void UnregisterListener<T>(IEventListener<T> listener) where T : struct
         {
-            var type = typeof(T);
+            Type type = typeof(T);
 
             RegisteredListeners[type].Remove(listener);
         }
 
         public static void RaiseEvent<T>(T evt)
         {
-            var type = typeof(T);
+            Type type = typeof(T);
 
-            foreach (var listener in RegisteredListeners[type])
+            foreach (IBaseEventListener listener in RegisteredListeners[type])
                 ((IEventListener<T>)listener).HandleEvent(evt);
         }
     }

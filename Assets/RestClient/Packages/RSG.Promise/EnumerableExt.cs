@@ -10,7 +10,7 @@ namespace RSG.Promises
     {
         public static void Each<T>(this IEnumerable<T> source, Action<T> fn)
         {
-            foreach (var item in source)
+            foreach (T item in source)
             {
                 fn.Invoke(item);
             }
@@ -32,7 +32,7 @@ namespace RSG.Promises
         /// </summary>
         public static IEnumerable<T> FromItems<T>(params T[] items)
         {
-            foreach (var item in items)
+            foreach (T item in items)
             {
                 yield return item;
             }

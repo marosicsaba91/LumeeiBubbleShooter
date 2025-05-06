@@ -13,7 +13,7 @@ namespace BubbleShooterKit
 	/// </summary>
 	public class Level
 	{
-		public readonly List<List<Bubble>> Tiles = new List<List<Bubble>>();
+		public readonly List<List<Bubble>> Tiles = new();
 
 		public int Rows;
 		public int Columns;
@@ -27,23 +27,23 @@ namespace BubbleShooterKit
 			Columns = columns;
 			evenWidth = columns;
 			oddWidth = columns - 1;
-			for (var i = 0; i < Rows; i++)
+			for (int i = 0; i < Rows; i++)
 			{
 				if (i % 2 == 0)
 				{
-					var row = new List<Bubble>(evenWidth);
+                    List<Bubble> row = new(evenWidth);
 					row.AddRange(Enumerable.Repeat<Bubble>(null, evenWidth));
 					Tiles.Add(row);
 				}
 				else
 				{
-					var row = new List<Bubble>(oddWidth);
+                    List<Bubble> row = new(oddWidth);
 					row.AddRange(Enumerable.Repeat<Bubble>(null, oddWidth));
 					Tiles.Add(row);
 				}
 			}
-			
-			var bottomRow = new List<Bubble>(Columns);
+
+            List<Bubble> bottomRow = new(Columns);
 			bottomRow.AddRange(Enumerable.Repeat<Bubble>(null, Columns));
 			Tiles.Add(bottomRow);
 		}
@@ -81,7 +81,7 @@ namespace BubbleShooterKit
 
 		public void AddBottomRow()
 		{
-			var row = new List<Bubble>(Columns);
+            List<Bubble> row = new(Columns);
 			row.AddRange(Enumerable.Repeat<Bubble>(null, Columns));
 			Tiles.Add(row);
 			Rows = Tiles.Count;
@@ -89,13 +89,13 @@ namespace BubbleShooterKit
 
 		public int GetGround()
 		{
-			var ground = Rows - 1;
+            int ground = Rows - 1;
 			
-			for (var i = Rows - 1; i >= 0; i--)
+			for (int i = Rows - 1; i >= 0; i--)
 			{
-				var row = Tiles[i];
-				var isEmpty = true;
-				foreach (var tile in row)
+                List<Bubble> row = Tiles[i];
+                bool isEmpty = true;
+				foreach (Bubble tile in row)
 				{
 					if (tile != null)
 					{
@@ -117,10 +117,10 @@ namespace BubbleShooterKit
 		
 		public override string ToString()
 		{
-			var str = new StringBuilder();
-			foreach (var row in Tiles)
+            StringBuilder str = new();
+			foreach (List<Bubble> row in Tiles)
 			{
-				foreach (var tile in row)
+				foreach (Bubble tile in row)
 				{
 					if (tile != null)
 					{

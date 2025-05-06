@@ -8,11 +8,11 @@ namespace RSG
         /// </summary>
         public static IPromise<Tuple<T1, T2>> All<T1, T2>(IPromise<T1> p1, IPromise<T2> p2)
         {
-            var val1 = default(T1);
-            var val2 = default(T2);
-            var numUnresolved = 2;
-            var alreadyRejected = false;
-            var promise = new Promise<Tuple<T1, T2>>();
+            T1 val1 = default(T1);
+            T2 val2 = default(T2);
+            int numUnresolved = 2;
+            bool alreadyRejected = false;
+            Promise<Tuple<T1, T2>> promise = new();
 
             p1
                 .Then(val => 

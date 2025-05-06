@@ -22,16 +22,16 @@ namespace BubbleShooterKit
 
 		public static List<Bubble> GetNeighbours(Level level, Bubble bubble)
 		{
-			var neighbours = new List<Bubble>();
+            List<Bubble> neighbours = new();
 
 			if (bubble.Row % 2 == 0)
 			{
-				var topLeft = level.GetTile(bubble.Row - 1, bubble.Column - 1);
-				var topRight = level.GetTile(bubble.Row - 1, bubble.Column);
-				var left = level.GetTile(bubble.Row, bubble.Column - 1);
-				var right = level.GetTile(bubble.Row, bubble.Column + 1);
-				var bottomLeft = level.GetTile(bubble.Row + 1, bubble.Column - 1);
-				var bottomRight = level.GetTile(bubble.Row + 1, bubble.Column);
+                Bubble topLeft = level.GetTile(bubble.Row - 1, bubble.Column - 1);
+                Bubble topRight = level.GetTile(bubble.Row - 1, bubble.Column);
+                Bubble left = level.GetTile(bubble.Row, bubble.Column - 1);
+                Bubble right = level.GetTile(bubble.Row, bubble.Column + 1);
+                Bubble bottomLeft = level.GetTile(bubble.Row + 1, bubble.Column - 1);
+                Bubble bottomRight = level.GetTile(bubble.Row + 1, bubble.Column);
 				if (topLeft != null) neighbours.Add(topLeft);
 				if (topRight != null) neighbours.Add(topRight);
 				if (left != null) neighbours.Add(left);
@@ -41,12 +41,12 @@ namespace BubbleShooterKit
 			}
 			else
 			{
-				var topLeft = level.GetTile(bubble.Row - 1, bubble.Column);
-				var topRight = level.GetTile(bubble.Row - 1, bubble.Column + 1);
-				var left = level.GetTile(bubble.Row, bubble.Column - 1);
-				var right = level.GetTile(bubble.Row, bubble.Column + 1);
-				var bottomLeft = level.GetTile(bubble.Row + 1, bubble.Column);
-				var bottomRight = level.GetTile(bubble.Row + 1, bubble.Column + 1);
+                Bubble topLeft = level.GetTile(bubble.Row - 1, bubble.Column);
+                Bubble topRight = level.GetTile(bubble.Row - 1, bubble.Column + 1);
+                Bubble left = level.GetTile(bubble.Row, bubble.Column - 1);
+                Bubble right = level.GetTile(bubble.Row, bubble.Column + 1);
+                Bubble bottomLeft = level.GetTile(bubble.Row + 1, bubble.Column);
+                Bubble bottomRight = level.GetTile(bubble.Row + 1, bubble.Column + 1);
 				if (topLeft != null) neighbours.Add(topLeft);
 				if (topRight != null) neighbours.Add(topRight);
 				if (left != null) neighbours.Add(left);
@@ -60,19 +60,19 @@ namespace BubbleShooterKit
 
 		public static List<Bubble> GetNeighboursInRadius(Level level, Bubble bubble, int radius)
 		{
-			var neighbours = new List<Bubble>();
+            List<Bubble> neighbours = new();
 
 			neighbours.AddRange(GetNeighboursInRadius(level, bubble));
 			--radius;
 			while (radius > 0)
 			{
-				var newNeighbours = new List<Bubble>();
-				foreach (var neighbour in neighbours)
+                List<Bubble> newNeighbours = new();
+				foreach (Bubble neighbour in neighbours)
 				{
 					newNeighbours.AddRange(GetNeighboursInRadius(level, neighbour));
 				}
 
-				foreach (var neighbour in newNeighbours)
+				foreach (Bubble neighbour in newNeighbours)
 				{
 					if (!neighbours.Contains(neighbour))
 						neighbours.Add(neighbour);
@@ -86,10 +86,10 @@ namespace BubbleShooterKit
 		
 		public static List<Bubble> GetNeighboursInRadius(Level level, Bubble bubble)
 		{
-			var neighbours = new List<Bubble>();
-			
-			var row = bubble.Row;
-			var column = bubble.Column;
+            List<Bubble> neighbours = new();
+
+            int row = bubble.Row;
+            int column = bubble.Column;
 			if (row % 2 == 0)
 			{
 				AddNeighbour(level, neighbours, row, column);
@@ -116,7 +116,7 @@ namespace BubbleShooterKit
 		
 		public static List<Bubble> GetRing(Level level, Bubble bubble, int radius)
 		{
-			var neighbours = new List<Bubble>();
+            List<Bubble> neighbours = new();
 
 			if (radius == 0)
 			{
@@ -124,21 +124,21 @@ namespace BubbleShooterKit
 				return neighbours;
 			}
 
-			var row = bubble.Row;
-			var column = bubble.Column;
+            int row = bubble.Row;
+            int column = bubble.Column;
 			
 			if (row % 2 == 0)
 			{
-				var i = 1;
-				var j = 0;
-				var k = 0;
+                int i = 1;
+                int j = 0;
+                int k = 0;
 				while (i <= radius)
 				{
-					var leftTop = level.GetTile(row - i, column - radius + j);
-					var rightTop = level.GetTile(row - i, column + j + radius - k - 1);
+                    Bubble leftTop = level.GetTile(row - i, column - radius + j);
+                    Bubble rightTop = level.GetTile(row - i, column + j + radius - k - 1);
 
-					var leftBottom = level.GetTile(row + i, column - radius + j);
-					var rightBottom = level.GetTile(row + i, column + j + radius - k - 1);
+                    Bubble leftBottom = level.GetTile(row + i, column - radius + j);
+                    Bubble rightBottom = level.GetTile(row + i, column + j + radius - k - 1);
 
 					if (leftTop != null) neighbours.Add(leftTop);
 					if (rightTop != null) neighbours.Add(rightTop);
@@ -147,10 +147,10 @@ namespace BubbleShooterKit
 
 					if (i == radius)
 					{
-						var c = column - radius + j + 1;
+                        int c = column - radius + j + 1;
 						while (c < (column + j + radius - k - 1))
 						{
-							var tile = level.GetTile(row + i, c);
+                            Bubble tile = level.GetTile(row + i, c);
 							if (tile != null) neighbours.Add(tile);
 
 							tile = level.GetTile(row - i, c);
@@ -167,16 +167,16 @@ namespace BubbleShooterKit
 			}
 			else
 			{
-				var i = 1;
-				var j = 1;
-				var k = 0;
+                int i = 1;
+                int j = 1;
+                int k = 0;
 				while (i <= radius)
 				{
-					var leftTop = level.GetTile(row - i, column - radius + j);
-					var rightTop = level.GetTile(row - i, column + radius + j - k - 1);
+                    Bubble leftTop = level.GetTile(row - i, column - radius + j);
+                    Bubble rightTop = level.GetTile(row - i, column + radius + j - k - 1);
 
-					var leftBottom = level.GetTile(row + i, column - radius + j);
-					var rightBottom = level.GetTile(row + i, column + radius + j - k - 1);
+                    Bubble leftBottom = level.GetTile(row + i, column - radius + j);
+                    Bubble rightBottom = level.GetTile(row + i, column + radius + j - k - 1);
 
 					if (leftTop != null) neighbours.Add(leftTop);
 					if (rightTop != null) neighbours.Add(rightTop);
@@ -185,10 +185,10 @@ namespace BubbleShooterKit
 					
 					if (i == radius)
 					{
-						var c = column - radius + j + 1;
+                        int c = column - radius + j + 1;
 						while (c < (column + j + radius - k - 1))
 						{
-							var tile = level.GetTile(row + i, c);
+                            Bubble tile = level.GetTile(row + i, c);
 							if (tile != null) neighbours.Add(tile);
 
 							tile = level.GetTile(row - i, c);
@@ -203,9 +203,9 @@ namespace BubbleShooterKit
 					++k;
 				}
 			}
-			
-			var left = level.GetTile(row, column - radius); 
-			var right = level.GetTile(row, column + radius);
+
+            Bubble left = level.GetTile(row, column - radius);
+            Bubble right = level.GetTile(row, column + radius);
 			if (left != null) neighbours.Add(left);
 			if (right != null) neighbours.Add(right);
 
@@ -214,14 +214,14 @@ namespace BubbleShooterKit
 
 		private static void AddNeighbour(Level level, List<Bubble> neighbours, int row, int column)
 		{
-			var neighbour = level.GetTile(row, column);
+            Bubble neighbour = level.GetTile(row, column);
 			if (neighbour != null && !neighbours.Contains(neighbour))
 				neighbours.Add(neighbour);
 		}
 		
 		public static List<ColorBubble> GetMatches(Level level, ColorBubble colorBubble)
 		{
-			var matches = new List<ColorBubble>();
+            List<ColorBubble> matches = new();
 			GetMatchesRecursive(level, colorBubble, matches);
 			if (!matches.Contains(colorBubble))
 			{
@@ -233,11 +233,11 @@ namespace BubbleShooterKit
 
 		private static void GetMatchesRecursive(Level level, ColorBubble colorBubble, List<ColorBubble> matchedBubbles)
 		{
-			var neighbours = GetNeighbours(level, colorBubble).OfType<ColorBubble>();
+            IEnumerable<ColorBubble> neighbours = GetNeighbours(level, colorBubble).OfType<ColorBubble>();
 
-			var hasMatch = false;
-			var enumerable = neighbours as ColorBubble[] ?? neighbours.ToArray();
-			foreach (var neighbour in enumerable)
+            bool hasMatch = false;
+            ColorBubble[] enumerable = neighbours as ColorBubble[] ?? neighbours.ToArray();
+			foreach (ColorBubble neighbour in enumerable)
 			{
 				if (neighbour.Type == colorBubble.Type)
 				{
@@ -255,7 +255,7 @@ namespace BubbleShooterKit
 				matchedBubbles.Add(colorBubble);
 			}
 			
-			foreach (var neighbour in enumerable)
+			foreach (ColorBubble neighbour in enumerable)
 			{
 				if (neighbour.Type == colorBubble.Type &&
 				    !matchedBubbles.Contains(neighbour))
@@ -267,16 +267,16 @@ namespace BubbleShooterKit
 
 		private static List<Bubble> FindIsland(Level level, Bubble bubble, List<Bubble> processed)
 		{
-			var toProcess = new Stack<Bubble>();
+            Stack<Bubble> toProcess = new();
 			toProcess.Push(bubble);
 
 			processed.Add(bubble);
 
-			var foundIsland = new List<Bubble>();
+            List<Bubble> foundIsland = new();
 
 			while (toProcess.Count > 0)
 			{
-				var processedBubble = toProcess.Pop();
+                Bubble processedBubble = toProcess.Pop();
 
 				if (processedBubble == null)
 				{
@@ -285,8 +285,8 @@ namespace BubbleShooterKit
 				
 				foundIsland.Add(processedBubble);
 
-				var neighbours = GetNeighbours(level, processedBubble);
-				foreach (var neighbour in neighbours)
+                List<Bubble> neighbours = GetNeighbours(level, processedBubble);
+				foreach (Bubble neighbour in neighbours)
 				{
 					if (!processed.Contains(neighbour))
 					{
@@ -301,24 +301,24 @@ namespace BubbleShooterKit
 		
 		public static List<List<Bubble>> FindFloatingIslands(Level level)
 		{
-			var foundIslands = new List<List<Bubble>>();
-			var processed = new List<Bubble>();
+            List<List<Bubble>> foundIslands = new();
+            List<Bubble> processed = new();
 
-			foreach (var row in level.Tiles)
+			foreach (List<Bubble> row in level.Tiles)
 			{
-				foreach (var tile in row)
+				foreach (Bubble tile in row)
 				{
 					if (!processed.Contains(tile))
 					{
-						var foundCluster = FindIsland(level, tile, processed);
+                        List<Bubble> foundCluster = FindIsland(level, tile, processed);
 
 						if (foundCluster.Count <= 0)
 						{
 							continue;
 						}
 
-						var floating = true;
-						foreach (var b in foundCluster)
+                        bool floating = true;
+						foreach (Bubble b in foundCluster)
 						{
 							if (b.Row == 0)
 							{
@@ -340,17 +340,17 @@ namespace BubbleShooterKit
 
 		public static List<EmptyTileInfo> GetEmptyNeighbours(Level level, int row, int column, ScreenLayoutInfo layoutInfo)
 		{
-			var emptyNeighboursInfo = new List<EmptyTileInfo>();
+            List<EmptyTileInfo> emptyNeighboursInfo = new();
 			
 			if (row % 2 == 0)
 			{
-				var self = level.GetTile(row, column);
-				var topLeft = level.GetTile(row - 1, column - 1);
-				var topRight = level.GetTile(row - 1, column);
-				var left = level.GetTile(row, column - 1);
-				var right = level.GetTile(row, column + 1);
-				var bottomLeft = level.GetTile(row + 1, column - 1);
-				var bottomRight = level.GetTile(row + 1, column);
+                Bubble self = level.GetTile(row, column);
+                Bubble topLeft = level.GetTile(row - 1, column - 1);
+                Bubble topRight = level.GetTile(row - 1, column);
+                Bubble left = level.GetTile(row, column - 1);
+                Bubble right = level.GetTile(row, column + 1);
+                Bubble bottomLeft = level.GetTile(row + 1, column - 1);
+                Bubble bottomRight = level.GetTile(row + 1, column);
 				if (self == null && level.IsValidTile(row, column))
 				{
 					emptyNeighboursInfo.Add(GenerateEmptyTileInfo(layoutInfo, row, column));
@@ -382,13 +382,13 @@ namespace BubbleShooterKit
 			}
 			else
 			{
-				var self = level.GetTile(row, column);
-				var topLeft = level.GetTile(row - 1, column);
-				var topRight = level.GetTile(row - 1, column + 1);
-				var left = level.GetTile(row, column - 1);
-				var right = level.GetTile(row, column + 1);
-				var bottomLeft = level.GetTile(row + 1, column);
-				var bottomRight = level.GetTile(row + 1, column + 1);
+                Bubble self = level.GetTile(row, column);
+                Bubble topLeft = level.GetTile(row - 1, column);
+                Bubble topRight = level.GetTile(row - 1, column + 1);
+                Bubble left = level.GetTile(row, column - 1);
+                Bubble right = level.GetTile(row, column + 1);
+                Bubble bottomLeft = level.GetTile(row + 1, column);
+                Bubble bottomRight = level.GetTile(row + 1, column + 1);
 				if (self == null && level.IsValidTile(row, column))
 				{
 					emptyNeighboursInfo.Add(GenerateEmptyTileInfo(layoutInfo, row, column));
@@ -444,18 +444,19 @@ namespace BubbleShooterKit
 				rowOffset = layoutInfo.TileWidth * 0.5f;
 			}
 
-			var bottomPivot = new Vector2(0, Camera.main.pixelHeight * GameplayConstants.BottomPivotHeight);
-			var bottomPivotPos = Camera.main.ScreenToWorldPoint(bottomPivot);
-			
-			var pos = new Vector2(
+            Vector2 bottomPivot = new(0, Camera.main.pixelHeight * GameplayConstants.BottomPivotHeight);
+            Vector3 bottomPivotPos = Camera.main.ScreenToWorldPoint(bottomPivot);
+
+            Vector2 pos = new(
 				(column * layoutInfo.TileWidth * GameplayConstants.TileWidthMultiplier) + rowOffset,
 				-row * layoutInfo.TileHeight * GameplayConstants.TileHeightMultiplier);
-			var newPos = pos;
+            Vector2 newPos = pos;
 			newPos.x -= layoutInfo.TotalWidth / 2f;
 			newPos.x += (layoutInfo.TileWidth * GameplayConstants.TileWidthMultiplier) / 2f;
 			newPos.y += bottomPivotPos.y + layoutInfo.TotalHeight;
-			newPos.y += PlayerPrefs.GetFloat("scrolled_height");
-			return newPos;
+			newPos.y += LevelManager.scrolledHeight;
+
+            return newPos;
 		}
 	}
 }

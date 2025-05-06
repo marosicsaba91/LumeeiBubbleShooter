@@ -22,9 +22,9 @@ namespace BubbleShooterKit
 	    [SerializeField]
         protected Canvas Canvas;
 
-        public readonly Stack<GameObject> CurrentPopups = new Stack<GameObject>();
+        public readonly Stack<GameObject> CurrentPopups = new();
 	    
-	    private readonly Stack<GameObject> currentPanels = new Stack<GameObject>();
+	    private readonly Stack<GameObject> currentPanels = new();
 
 	    protected virtual void Start()
 	    {
@@ -38,21 +38,21 @@ namespace BubbleShooterKit
 
         public void CloseCurrentPopup()
         {
-            var currentPopup = CurrentPopups.Peek();
+            GameObject currentPopup = CurrentPopups.Peek();
             if (currentPopup != null)
                 currentPopup.GetComponent<Popup>().Close();
         }
 
         public void ClosePopup()
         {
-            var topmostPopup = CurrentPopups.Pop();
+            GameObject topmostPopup = CurrentPopups.Pop();
             if (topmostPopup == null)
                 return;
 
-            var topmostPanel = currentPanels.Pop();
+            GameObject topmostPanel = currentPanels.Pop();
             if (topmostPanel != null)
             {
-                var seq = DOTween.Sequence();
+                Sequence seq = DOTween.Sequence();
                 seq.Append(topmostPanel.GetComponent<Image>().DOFade(0.0f, 0.2f));
                 seq.AppendCallback(() => Destroy(topmostPanel));
             }
@@ -60,25 +60,25 @@ namespace BubbleShooterKit
 
 	    private IEnumerator OpenPopupAsync<T>(string popupName, Action<T> onOpened) where T : Popup
         {
-            var request = Resources.LoadAsync<GameObject>(popupName);
+            ResourceRequest request = Resources.LoadAsync<GameObject>(popupName);
             while (!request.isDone)
                 yield return null;
 
-            var panel = new GameObject("Panel");
-            var panelImage = panel.AddComponent<Image>();
-            var color = Color.black;
+            GameObject panel = new("Panel");
+            Image panelImage = panel.AddComponent<Image>();
+            Color color = Color.black;
             color.a = 0;
             panelImage.color = color;
-            var panelTransform = panel.GetComponent<RectTransform>();
+            RectTransform panelTransform = panel.GetComponent<RectTransform>();
             panelTransform.anchorMin = new Vector2(0, 0);
             panelTransform.anchorMax = new Vector2(1, 1);
             panelTransform.pivot = new Vector2(0.5f, 0.5f);
             panel.transform.SetParent(Canvas.transform, false);
             currentPanels.Push(panel);
-            var seq = DOTween.Sequence();
+            Sequence seq = DOTween.Sequence();
             seq.Append(panel.GetComponent<Image>().DOFade(220.0f/256.0f, 0.2f));
 
-            var popup = Instantiate(request.asset) as GameObject;
+            GameObject popup = Instantiate(request.asset) as GameObject;
             Assert.IsNotNull((popup));
             popup.transform.SetParent(Canvas.transform, false);
             popup.GetComponent<Popup>().ParentScreen = this;

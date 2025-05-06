@@ -20,25 +20,24 @@ namespace BubbleShooterKit
 
         public void BuyCoins(int amount)
         {
-            if (!PlayerPrefs.HasKey("num_coins"))
-                PlayerPrefs.SetInt("num_coins", GameConfig.InitialCoins);
-
-            var numCoins = PlayerPrefs.GetInt("num_coins");
+            int numCoins = UserManager.CurrentUser.coins;
             numCoins += amount;
-            PlayerPrefs.SetInt("num_coins", numCoins);
+            UserManager.CurrentUser.coins = numCoins;
+            UserManager.TrySaveUserData();
             onCoinsUpdated?.Invoke(numCoins);
         }
 
         public void SpendCoins(int amount)
         {
-            if (!PlayerPrefs.HasKey("num_coins"))
-                PlayerPrefs.SetInt("num_coins", GameConfig.InitialCoins);
+            int numCoins = UserManager.CurrentUser.coins;
 
-            var numCoins = PlayerPrefs.GetInt("num_coins");
             numCoins -= amount;
             if (numCoins < 0)
                 numCoins = 0;
-            PlayerPrefs.SetInt("num_coins", numCoins);
+
+            UserManager.CurrentUser.coins = numCoins;
+            UserManager.TrySaveUserData();
+
             onCoinsUpdated?.Invoke(numCoins);
         }
 

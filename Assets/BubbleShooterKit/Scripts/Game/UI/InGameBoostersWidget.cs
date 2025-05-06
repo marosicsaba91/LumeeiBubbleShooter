@@ -18,12 +18,14 @@ namespace BubbleShooterKit
 		[SerializeField]
 		private List<InGameBoosterButton> buttons = null;
 
-		public void Initialize(GameConfiguration gameConfig, LevelInfo levelInfo)
+		public void Initialize( LevelInfo levelInfo)
 		{
-			buttons[0].Initialize(gameScreen, gameScreen.PlayerBubbles, boosterSprites[0], PlayerPrefs.GetInt("num_boosters_0"), levelInfo.IsSuperAimAvailable);
-			buttons[1].Initialize(gameScreen, gameScreen.PlayerBubbles, boosterSprites[1], PlayerPrefs.GetInt("num_boosters_1"), levelInfo.IsRainbowBombAvailable);
-			buttons[2].Initialize(gameScreen, gameScreen.PlayerBubbles, boosterSprites[2], PlayerPrefs.GetInt("num_boosters_2"), levelInfo.IsHorizontalBombAvailable);
-			buttons[3].Initialize(gameScreen, gameScreen.PlayerBubbles, boosterSprites[3], PlayerPrefs.GetInt("num_boosters_3"), levelInfo.IsCircleBombAvailable);
-		}
+			for (int i = 0; i < buttons.Count; i++)
+            {
+                PurchasableBoosterBubbleType booster = (PurchasableBoosterBubbleType)i;
+                int numBooster = UserManager.CurrentUser.GetBoosterAmount(booster);
+                buttons[i].Initialize(gameScreen, gameScreen.PlayerBubbles, boosterSprites[i], numBooster, levelInfo.IsBoosterAvailable(booster));
+            }
+        }
 	}
 }

@@ -37,9 +37,9 @@ namespace BubbleShooterKit
             base.Start();
             CoinsSystem.Subscribe(OnCoinsChanged);
 
-            foreach (var item in GameConfig.IapItems)
+            foreach (IapItem item in GameConfig.IapItems)
             {
-                var row = Instantiate(purchasableItemPrefab);
+                GameObject row = Instantiate(purchasableItemPrefab);
                 row.transform.SetParent(purchasableItems.transform, false);
                 row.GetComponent<PurchasableItem>().Fill(item);
                 row.GetComponent<PurchasableItem>().BuyCoinsPopup = this;

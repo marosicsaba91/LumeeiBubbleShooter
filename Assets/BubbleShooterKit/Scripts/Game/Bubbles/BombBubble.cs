@@ -13,7 +13,7 @@ namespace BubbleShooterKit
 	{
 		public override List<Bubble> Resolve(Level level, Bubble shotBubble)
 		{
-			var bubblesToExplode = new List<Bubble>();
+            List<Bubble> bubblesToExplode = new();
 			bubblesToExplode.AddRange(LevelUtils.GetNeighbours(level, this));
 			bubblesToExplode.Add(this);
 			return bubblesToExplode;

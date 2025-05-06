@@ -23,14 +23,14 @@ namespace BubbleShooterKit
         private void Awake()
         {
             canvasObject = new GameObject("TransitionCanvas");
-            var canvas = canvasObject.AddComponent<Canvas>();
+            Canvas canvas = canvasObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             DontDestroyOnLoad(canvasObject);
         }
 
         public static void LoadLevel(string level, float duration, Color fadeColor)
         {
-            var fade = new GameObject("Transition");
+            GameObject fade = new("Transition");
             fade.AddComponent<Transition>();
             fade.GetComponent<Transition>().StartFade(level, duration, fadeColor);
             fade.transform.SetParent(canvasObject.transform, false);
@@ -44,17 +44,17 @@ namespace BubbleShooterKit
 
         private IEnumerator RunFade(string level, float duration, Color fadeColor)
         {
-            var bgTex = new Texture2D(1, 1);
+            Texture2D bgTex = new(1, 1);
             bgTex.SetPixel(0, 0, fadeColor);
             bgTex.Apply();
 
             overlay = new GameObject();
-            var image = overlay.AddComponent<Image>();
-            var rect = new Rect(0, 0, bgTex.width, bgTex.height);
-            var sprite = Sprite.Create(bgTex, rect, new Vector2(0.5f, 0.5f), 1);
+            Image image = overlay.AddComponent<Image>();
+            Rect rect = new(0, 0, bgTex.width, bgTex.height);
+            Sprite sprite = Sprite.Create(bgTex, rect, new Vector2(0.5f, 0.5f), 1);
             image.material.mainTexture = bgTex;
             image.sprite = sprite;
-            var newColor = image.color;
+            Color newColor = image.color;
             image.color = newColor;
             image.canvasRenderer.SetAlpha(0.0f);
 
@@ -63,8 +63,8 @@ namespace BubbleShooterKit
             overlay.transform.SetParent(canvasObject.transform, false);
             overlay.transform.SetAsFirstSibling();
 
-            var time = 0.0f;
-            var halfDuration = duration / 2.0f;
+            float time = 0.0f;
+            float halfDuration = duration / 2.0f;
             while (time < halfDuration)
             {
                 time += Time.deltaTime;

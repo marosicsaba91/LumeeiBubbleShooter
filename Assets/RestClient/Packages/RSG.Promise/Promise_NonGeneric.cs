@@ -276,7 +276,7 @@ namespace RSG
         /// Information about pending promises.
         /// </summary>
         internal static readonly HashSet<IPromiseInfo> PendingPromises = 
-            new HashSet<IPromiseInfo>();
+            new();
 
         /// <summary>
         /// Information about pending promises, useful for debugging.
@@ -646,9 +646,9 @@ namespace RSG
         /// </summary>
         public IPromise Catch(Action<Exception> onRejected)
         {
-//            Argument.NotNull(() => onRejected);
+            //            Argument.NotNull(() => onRejected);
 
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName(Name);
 
             Action resolveHandler = () => resultPromise.Resolve();
@@ -733,9 +733,9 @@ namespace RSG
         {
             // This version of the function must supply an onResolved.
             // Otherwise there is now way to get the converted value to pass to the resulting promise.
-//            Argument.NotNull(() => onResolved);
+            //            Argument.NotNull(() => onResolved);
 
-            var resultPromise = new Promise<ConvertedT>();
+            Promise<ConvertedT> resultPromise = new();
             resultPromise.WithName(Name);
 
             Action resolveHandler = () =>
@@ -786,7 +786,7 @@ namespace RSG
         /// </summary>
         public IPromise Then(Func<IPromise> onResolved, Action<Exception> onRejected, Action<float> onProgress)
         {
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName(Name);
 
             Action resolveHandler = () =>
@@ -830,7 +830,7 @@ namespace RSG
         /// </summary>
         public IPromise Then(Action onResolved, Action<Exception> onRejected, Action<float> onProgress)
         {
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName(Name);
 
             Action resolveHandler = () =>
@@ -931,16 +931,16 @@ namespace RSG
         /// </summary>
         public static IPromise All(IEnumerable<IPromise> promises)
         {
-            var promisesArray = promises.ToArray();
+            IPromise[] promisesArray = promises.ToArray();
             if (promisesArray.Length == 0)
             {
                 return Resolved();
             }
 
-            var remainingCount = promisesArray.Length;
-            var resultPromise = new Promise();
+            int remainingCount = promisesArray.Length;
+            Promise resultPromise = new();
             resultPromise.WithName("All");
-            var progress = new float[remainingCount];
+            float[] progress = new float[remainingCount];
 
             promisesArray.Each((promise, index) =>
             {
@@ -1004,7 +1004,7 @@ namespace RSG
         /// </summary>
         public static IPromise Sequence(IEnumerable<Func<IPromise>> fns)
         {
-            var promise = new Promise();
+            Promise promise = new();
 
             int count = 0;
 
@@ -1018,13 +1018,13 @@ namespace RSG
                     return prevPromise
                             .Then(() =>
                             {
-                                var sliceLength = 1f / count;
+                                float sliceLength = 1f / count;
                                 promise.ReportProgress(sliceLength * itemSequence);
                                 return fn();
                             })
                             .Progress(v =>
                             {
-                                var sliceLength = 1f / count;
+                                float sliceLength = 1f / count;
                                 promise.ReportProgress(sliceLength * (v + itemSequence));
                             })
                     ;
@@ -1070,16 +1070,16 @@ namespace RSG
         /// </summary>
         public static IPromise Race(IEnumerable<IPromise> promises)
         {
-            var promisesArray = promises.ToArray();
+            IPromise[] promisesArray = promises.ToArray();
             if (promisesArray.Length == 0)
             {
                 throw new InvalidOperationException("At least 1 input promise must be provided for Race");
             }
 
-            var resultPromise = new Promise();
+            Promise resultPromise = new();
             resultPromise.WithName("Race");
 
-            var progress = new float[promisesArray.Length];
+            float[] progress = new float[promisesArray.Length];
 
             promisesArray.Each((promise, index) =>
             {
@@ -1115,7 +1115,7 @@ namespace RSG
         /// </summary>
         public static IPromise Resolved()
         {
-            var promise = new Promise();
+            Promise promise = new();
             promise.Resolve();
             return promise;
         }
@@ -1125,16 +1125,16 @@ namespace RSG
         /// </summary>
         public static IPromise Rejected(Exception ex)
         {
-//            Argument.NotNull(() => ex);
+            //            Argument.NotNull(() => ex);
 
-            var promise = new Promise();
+            Promise promise = new();
             promise.Reject(ex);
             return promise;
         }
 
         public IPromise Finally(Action onComplete)
         {
-            var promise = new Promise();
+            Promise promise = new();
             promise.WithName(Name);
 
             this.Then(() => promise.Resolve());
@@ -1152,7 +1152,7 @@ namespace RSG
 
         public IPromise ContinueWith(Func<IPromise> onComplete)
         {
-            var promise = new Promise();
+            Promise promise = new();
             promise.WithName(Name);
 
             this.Then(() => promise.Resolve());
@@ -1163,7 +1163,7 @@ namespace RSG
 
         public IPromise<ConvertedT> ContinueWith<ConvertedT>(Func<IPromise<ConvertedT>> onComplete)
         {
-            var promise = new Promise();
+            Promise promise = new();
             promise.WithName(Name);
 
             this.Then(() => promise.Resolve());

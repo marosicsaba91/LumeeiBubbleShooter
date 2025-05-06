@@ -16,7 +16,7 @@ namespace BubbleShooterKit
     public class BuyLivesWidget : MonoBehaviour
     {
         public GameConfiguration GameConfig;
-        
+
         [SerializeField]
         private Sprite enabledLifeSprite = null;
 
@@ -55,30 +55,37 @@ namespace BubbleShooterKit
             Assert.IsNotNull(disabledButtonSprite);
         }
 
-        private void Start()
+        void Start()
         {
             freeLivesChecker = FindFirstObjectByType<CheckForFreeLives>();
-            
-            var numLives = PlayerPrefs.GetInt("num_lives");
-            var maxLives = GameConfig.MaxLives;
+
+            int numLives = UserManager.CurrentUser.lives;
+            int maxLives = GameConfig.MaxLives;
             numLivesText.text = numLives.ToString();
             buttonImage.sprite = numLives == maxLives ? disabledButtonSprite : enabledButtonSprite;
-            freeLivesChecker.Subscribe(OnLivesCountdownUpdated, OnLivesCountdownFinished);
+
+            freeLivesChecker.onCountdownUpdated += OnLivesCountdownUpdated;
+            freeLivesChecker.onCountdownFinished += OnLivesCountdownFinished;
+
+            int lives = UserManager.CurrentUser.lives;
+            if (lives < GameConfig.MaxLives)
+                OnLivesCountdownUpdated(freeLivesChecker.TimeLeft, lives);
+            else
+                OnLivesCountdownFinished(lives);
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
-           freeLivesChecker.Unsubscribe(OnLivesCountdownUpdated, OnLivesCountdownFinished);
+            freeLivesChecker.onCountdownUpdated -= OnLivesCountdownUpdated;
+            freeLivesChecker.onCountdownFinished -= OnLivesCountdownFinished;
         }
 
         public void OnBuyButtonPressed()
         {
-            var numLives = PlayerPrefs.GetInt("num_lives");
-            var maxLives = GameConfig.MaxLives;
-            if (numLives < maxLives)
+            if (UserManager.CurrentUser.lives < GameConfig.MaxLives)
             {
-                var scene = FindFirstObjectByType<BaseScreen>();
-                var buyLivesPopup = FindFirstObjectByType<BuyLivesPopup>();
+                BaseScreen scene = FindFirstObjectByType<BaseScreen>();
+                BuyLivesPopup buyLivesPopup = FindFirstObjectByType<BuyLivesPopup>();
                 if (scene != null && buyLivesPopup == null)
                     scene.OpenPopup<BuyLivesPopup>("Popups/BuyLivesPopup");
             }
@@ -89,7 +96,7 @@ namespace BubbleShooterKit
             timeToNextLifeText.text = $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
             numLivesText.text = lives.ToString();
             lifeImage.sprite = lives == 0 ? disabledLifeSprite : enabledLifeSprite;
-            var maxLives = GameConfig.MaxLives;
+            int maxLives = GameConfig.MaxLives;
             buttonImage.sprite = lives == maxLives ? disabledButtonSprite : enabledButtonSprite;
         }
 

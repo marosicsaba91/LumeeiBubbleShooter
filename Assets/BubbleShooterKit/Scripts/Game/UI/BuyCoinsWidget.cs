@@ -26,9 +26,7 @@ namespace BubbleShooterKit
 
         private void Start()
         {
-            if (!PlayerPrefs.HasKey("num_coins"))
-                PlayerPrefs.SetInt("num_coins", GameConfig.InitialCoins);
-            var numCoins = PlayerPrefs.GetInt("num_coins");
+            int numCoins = UserManager.CurrentUser.coins;
             numCoinsText.text = numCoins.ToString("n0");
             CoinsSystem.Subscribe(OnCoinsChanged);
         }
@@ -40,8 +38,8 @@ namespace BubbleShooterKit
 
         public void OnBuyButtonPressed()
         {
-            var scene = FindFirstObjectByType<BaseScreen>();
-            var buyCoinsPopup = FindFirstObjectByType<BuyCoinsPopup>();
+            BaseScreen scene = FindFirstObjectByType<BaseScreen>();
+            BuyCoinsPopup buyCoinsPopup = FindFirstObjectByType<BuyCoinsPopup>();
             if (scene != null && buyCoinsPopup == null)
                 scene.OpenPopup<BuyCoinsPopup>("Popups/BuyCoinsPopup");
         }

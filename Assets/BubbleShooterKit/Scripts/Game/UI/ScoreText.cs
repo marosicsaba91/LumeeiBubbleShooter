@@ -46,7 +46,7 @@ namespace BubbleShooterKit
             if (accTime >= textDuration)
             {
                 accTime = 0.0f;
-                var seq = DOTween.Sequence();
+                Sequence seq = DOTween.Sequence();
                 scoreText.DOFade(0.0f, fadeDuration);
                 seq.Append(scoreTextBorder.DOFade(0.0f, fadeDuration));
                 seq.AppendCallback(() => GetComponent<PooledObject>().Pool.ReturnObject(gameObject));

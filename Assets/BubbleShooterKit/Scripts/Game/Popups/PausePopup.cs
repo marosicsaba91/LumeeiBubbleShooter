@@ -2,6 +2,7 @@
 // This code can only be used under the standard Unity Asset Store End User License Agreement,
 // a copy of which is available at http://unity3d.com/company/legal/as_terms.
 
+using Models;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -28,17 +29,18 @@ namespace BubbleShooterKit
 		protected override void Start()
 		{
 			base.Start();
-			var currentMusic = PlayerPrefs.GetInt("music_enabled");
-			if (currentMusic == 0)
+
+            if (!UserManager.CurrentUser.musicEnabled)
 				musicButton.GetComponent<SpriteSwapper>().SwapSprite();
-			var currentSound = PlayerPrefs.GetInt("sound_enabled");
-			if (currentSound == 0)
-				soundButton.GetComponent<SpriteSwapper>().SwapSprite();
+
+			 
+            if (!UserManager.CurrentUser.soundEnabled)
+                soundButton.GetComponent<SpriteSwapper>().SwapSprite();
 		}
 
 		public void OnContinueButtonPressed()
 		{
-			var gameScreen = ParentScreen as GameScreen;
+            GameScreen gameScreen = ParentScreen as GameScreen;
 			if (gameScreen != null)
 				gameScreen.UnlockInput();
 			Close();
@@ -50,7 +52,7 @@ namespace BubbleShooterKit
 			{
 				popup.SetInfo("Do you really want to restart the game?", "(You will lose a life)", () =>
 				{
-					var gameScreen = ParentScreen as GameScreen;
+                    GameScreen gameScreen = ParentScreen as GameScreen;
 					if (gameScreen != null)
 					{
 						gameScreen.UnlockInput();
@@ -70,7 +72,7 @@ namespace BubbleShooterKit
 			{
 				popup.SetInfo("Do you really want to quit the game?", "(You will lose a life)", () =>
 				{
-					var gameScreen = ParentScreen as GameScreen;
+                    GameScreen gameScreen = ParentScreen as GameScreen;
 					if (gameScreen != null)
 						gameScreen.PenalizePlayer();
 					
@@ -80,19 +82,17 @@ namespace BubbleShooterKit
 		}
 
 		public void OnMusicButtonPressed()
-		{
-			var currentMusic = PlayerPrefs.GetInt("music_enabled");
-			currentMusic = 1 - currentMusic;	
-            SoundPlayer.SetMusicEnabled(currentMusic == 1);
-            PlayerPrefs.SetInt("music_enabled", currentMusic);
-		}
+        {
+			User user = UserManager.CurrentUser;
+            user.musicEnabled = !user.musicEnabled;
+            SoundPlayer.SetSoundEnabled(user.musicEnabled);
+        }
 
 		public void OnSoundButtonPressed()
-		{
-			var currentSound = PlayerPrefs.GetInt("sound_enabled");
-			currentSound = 1 - currentSound;	
-            SoundPlayer.SetSoundEnabled(currentSound == 1);
-            PlayerPrefs.SetInt("sound_enabled", currentSound);
+        {
+            User user = UserManager.CurrentUser;
+            user.soundEnabled = !user.soundEnabled; 
+            SoundPlayer.SetSoundEnabled(user.soundEnabled);
 		}
 	}
 }

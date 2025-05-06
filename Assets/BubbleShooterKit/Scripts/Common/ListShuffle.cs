@@ -12,16 +12,16 @@ namespace BubbleShooterKit
     /// </summary>
 	public static class ListShuffle
 	{
-		private static readonly Random Rng = new Random();
+		private static readonly Random Rng = new();
 
 		public static void Shuffle<T>(this IList<T> list)
 		{
-			var n = list.Count;
+            int n = list.Count;
 			while (n > 1)
 			{
 				n--;
-				var k = Rng.Next(n + 1);
-				var value = list[k];
+                int k = Rng.Next(n + 1);
+				T value = list[k];
 				list[k] = list[n];
 				list[n] = value;
 			}

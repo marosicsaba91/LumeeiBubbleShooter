@@ -18,7 +18,7 @@ namespace BubbleShooterKit
 		
         public static bool FileExists(string path)
         {
-            var level = Resources.Load<LevelInfo>(path);
+            LevelInfo level = Resources.Load<LevelInfo>(path);
             return level != null;
         }
 	}

@@ -51,13 +51,13 @@ namespace BubbleShooterKit
 
 			OnOpen.AddListener(() =>
 			{
-				var gameScreen = ParentScreen as GameScreen;
+                GameScreen gameScreen = ParentScreen as GameScreen;
 				if (gameScreen != null)
 					gameScreen.OpenTopCanvas();
 			});
 			OnClose.AddListener(() =>
 			{
-				var gameScreen = ParentScreen as GameScreen;
+                GameScreen gameScreen = ParentScreen as GameScreen;
 				if (gameScreen != null)
 					gameScreen.CloseTopCanvas();
 			});
@@ -103,22 +103,20 @@ namespace BubbleShooterKit
 		}
 		
 		public void OnBuyButtonPressed()
-		{
-		    var playerPrefsKey = $"num_boosters_{(int)boosterBubbleType}";
-		    var numBoosters = PlayerPrefs.GetInt(playerPrefsKey);
+		{ 
+			int numBoosters = UserManager.CurrentUser.GetBoosterAmount(boosterBubbleType);
 
-		    Close();
+            Close();
 
-		    var gameScreen = ParentScreen as GameScreen;
+            GameScreen gameScreen = ParentScreen as GameScreen;
 		    if (gameScreen != null)
 		    {
-			    var cost = GetBoosterCost(boosterBubbleType);
-				if (!PlayerPrefs.HasKey("num_coins"))
-				    PlayerPrefs.SetInt("num_coins", gameConfig.InitialCoins);
-			    var coins = PlayerPrefs.GetInt("num_coins");
+                int cost = GetBoosterCost(boosterBubbleType);
+
+                int coins = UserManager.CurrentUser.coins;
 			    if (cost > coins)
 			    {
-				    var button = boosterButton;
+                    InGameBoosterButton button = boosterButton;
 				    gameScreen.OpenPopup<BuyCoinsPopup>("Popups/BuyCoinsPopup",
 					    popup =>
 					    {
@@ -135,7 +133,8 @@ namespace BubbleShooterKit
 				    coinsSystem.SpendCoins(cost);
                     SoundPlayer.PlaySoundFx("CoinsPopButton");
 				    numBoosters += GetBoosterAmount(boosterBubbleType);
-				    PlayerPrefs.SetInt(playerPrefsKey, numBoosters);
+
+                    UserManager.CurrentUser.SetBoosterAmount(boosterBubbleType, numBoosters);
 				    boosterButton.UpdateAmount(numBoosters);
 			    }
 		    }

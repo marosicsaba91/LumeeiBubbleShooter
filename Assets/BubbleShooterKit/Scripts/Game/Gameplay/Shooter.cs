@@ -34,7 +34,7 @@ namespace BubbleShooterKit
 		private Vector2 hitPoint;
 		private Vector2 shootDir;
 
-		private readonly List<GameObject> dots = new List<GameObject>();
+		private readonly List<GameObject> dots = new();
 
 		private bool isInputEnabled;
 		private bool isUserPressing;
@@ -58,15 +58,15 @@ namespace BubbleShooterKit
 		{
 			const float startAlpha = 0f;
 			const float alphaIncrease = 0.2f;
-			for (var i = 0; i < numDots; i++)
+			for (int i = 0; i < numDots; i++)
 			{
-				var dot = Instantiate(DotPrefab);
+                GameObject dot = Instantiate(DotPrefab);
 				dot.transform.parent = transform;
 				dot.transform.localPosition = Vector3.zero;
 				dots.Add(dot);
 
-				var spriteRenderer = dot.GetComponent<SpriteRenderer>();
-				var color = spriteRenderer.color;
+                SpriteRenderer spriteRenderer = dot.GetComponent<SpriteRenderer>();
+                Color color = spriteRenderer.color;
 				color.a = startAlpha + Mathf.Clamp(i * alphaIncrease, 0, 1);
 				spriteRenderer.color = color;
 			}
@@ -74,7 +74,7 @@ namespace BubbleShooterKit
 
 		public void ApplySuperAim()
 		{
-			foreach (var dot in dots)
+			foreach (GameObject dot in dots)
 				Destroy(dot);
 			dots.Clear();
 
@@ -90,18 +90,18 @@ namespace BubbleShooterKit
 
 		private void OrientDots()
 		{
-			var leftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
-			var rightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0));
+            Vector3 leftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+            Vector3 rightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0));
 
-			var normalDir = shootDir.normalized;
-			var hasReversed = false;
-			var reversed = 0;
-			var reversedLeft = false;
-			for (var i = 0; i < dots.Count; i++)
+            Vector2 normalDir = shootDir.normalized;
+            bool hasReversed = false;
+            int reversed = 0;
+            bool reversedLeft = false;
+			for (int i = 0; i < dots.Count; i++)
 			{
-				var dot = dots[i];
+                GameObject dot = dots[i];
 
-				var newPos = new Vector3(normalDir.x, normalDir.y) * i * DotGap;
+                Vector3 newPos = new Vector3(normalDir.x, normalDir.y) * i * DotGap;
 				dot.transform.localPosition = newPos;
 
 				if (dot.transform.localPosition.x <= leftEdge.x)
@@ -124,18 +124,18 @@ namespace BubbleShooterKit
 			{
 				const float startAlpha = 0f;
 				const float alphaIncrease = 0.2f;
-				var idx = 1;
-				for (var i = reversed; i < dots.Count; i++)
+                int idx = 1;
+				for (int i = reversed; i < dots.Count; i++)
 				{
-					var dot = dots[i];
+                    GameObject dot = dots[i];
 
-					var newPos = new Vector3(-normalDir.x, normalDir.y) * i * DotGap;
+                    Vector3 newPos = new Vector3(-normalDir.x, normalDir.y) * i * DotGap;
 					newPos.x += reversedLeft ? -rightEdge.x * 2 : rightEdge.x * 2;
 					newPos.y -= tileHeight / 2.0f;
 					dot.transform.localPosition = newPos;
 
-					var spriteRenderer = dot.GetComponent<SpriteRenderer>();
-					var color = spriteRenderer.color;
+                    SpriteRenderer spriteRenderer = dot.GetComponent<SpriteRenderer>();
+                    Color color = spriteRenderer.color;
 					color.a = startAlpha + Mathf.Clamp(idx * alphaIncrease, 0, 1);
 					spriteRenderer.color = color;
 					++idx;
@@ -146,9 +146,9 @@ namespace BubbleShooterKit
 		private void ShowDots()
 		{
 			dotsHidden = false;
-			foreach (var dot in dots)
+			foreach (GameObject dot in dots)
 			{
-				var spriteRenderer = dot.GetComponent<SpriteRenderer>();
+                SpriteRenderer spriteRenderer = dot.GetComponent<SpriteRenderer>();
 				spriteRenderer.DOKill();
 				spriteRenderer.DOFade(1.0f, 1.0f);
 			}
@@ -157,9 +157,9 @@ namespace BubbleShooterKit
 		private void HideDots()
 		{
 			dotsHidden = true;
-			foreach (var dot in dots)
+			foreach (GameObject dot in dots)
 			{
-				var spriteRenderer = dot.GetComponent<SpriteRenderer>();
+                SpriteRenderer spriteRenderer = dot.GetComponent<SpriteRenderer>();
 				spriteRenderer.DOKill();
 				spriteRenderer.DOFade(0.0f, 1.0f);
 			}
@@ -191,12 +191,12 @@ namespace BubbleShooterKit
 			if (!isUserPressing)
 				return;
 
-			var point = mainCamera.ScreenToWorldPoint(touch);
-			var direction = point - transform.position;
+            Vector3 point = mainCamera.ScreenToWorldPoint(touch);
+            Vector3 direction = point - transform.position;
 			direction.Normalize();
 
-			var angle = Vector2.Angle(new Vector2(1, 0), direction);
-			var shouldHideDots = angle <= MaxAngle || angle >= 180 - MaxAngle;
+            float angle = Vector2.Angle(new Vector2(1, 0), direction);
+            bool shouldHideDots = angle <= MaxAngle || angle >= 180 - MaxAngle;
 			if (shouldHideDots)
 			{
 				HideDots();
@@ -206,7 +206,7 @@ namespace BubbleShooterKit
 			if (dotsHidden)
 				ShowDots();
 
-			var hit = Physics2D.Raycast(transform.position, direction);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction);
 			if (hit.collider != null)
 			{
 				if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall") ||
@@ -229,15 +229,15 @@ namespace BubbleShooterKit
 			if (!GameScreen.CanPlayerShoot())
 				return;
 
-			var touches = Input.touches;
+            Touch[] touches = Input.touches;
 			if (touches.Length > 0)
 			{
-				var touch = touches[0];
+                Touch touch = touches[0];
 
 				if (touch.phase == TouchPhase.Began)
 				{
-					var pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
-					var mousePos = mainCamera.ScreenToWorldPoint(touch.position);
+                    Vector2 pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
+                    Vector3 mousePos = mainCamera.ScreenToWorldPoint(touch.position);
 					if (mousePos.y >= pivot.y)
 					{
 						isMouseDown = true;
@@ -251,8 +251,8 @@ namespace BubbleShooterKit
 				}
 				else if (isMouseDown)
 				{
-					var pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
-					var mousePos = mainCamera.ScreenToWorldPoint(touch.position);
+                    Vector2 pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
+                    Vector3 mousePos = mainCamera.ScreenToWorldPoint(touch.position);
 					if (mousePos.y >= pivot.y)
 					{
 						HandleTouchMove(touch.position);
@@ -266,8 +266,8 @@ namespace BubbleShooterKit
 			}
 			else if (Input.GetMouseButtonDown(0))
 			{
-				var pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
-				var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
+                Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 				if (mousePos.y >= pivot.y)
 				{
 					isMouseDown = true;
@@ -281,8 +281,8 @@ namespace BubbleShooterKit
 			}
 			else if (isMouseDown)
 			{
-				var pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
-				var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 pivot = CanvasUtils.CanvasToWorldPoint(PrimaryBubblePivot);
+                Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 				if (mousePos.y >= pivot.y)
 				{
 					HandleTouchMove(Input.mousePosition);

@@ -42,7 +42,7 @@ namespace BubbleShooterKit
 			childTransform.localScale = originalScale;
 			if (transform.childCount >= 2)
 			{
-				var cover = transform.GetChild(1);
+                Transform cover = transform.GetChild(1);
 				cover.GetComponent<PooledObject>().Pool.ReturnObject(cover.gameObject);
 			}
 		}
@@ -53,7 +53,7 @@ namespace BubbleShooterKit
 			if (accTime >= GameplayConstants.BubbleBlinkRate)
 			{
 				accTime = 0.0f;
-				var rnd = Random.Range(0, 2);
+                int rnd = Random.Range(0, 2);
 				if (rnd == 0)
 					childTransform.GetComponent<Animator>().SetTrigger("Blink");
 			}
@@ -61,7 +61,7 @@ namespace BubbleShooterKit
 
 		public override void ShowExplosionFx(FxPool fxPool)
 		{
-			var fx = fxPool.GetColorBubbleParticlePool(Type).GetObject();
+            GameObject fx = fxPool.GetColorBubbleParticlePool(Type).GetObject();
 			fx.transform.position = transform.position;
 		}
 	}

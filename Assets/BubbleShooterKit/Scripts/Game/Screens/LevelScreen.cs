@@ -36,15 +36,13 @@ namespace BubbleShooterKit
 
             scrollRect.vertical = false;
 
-            var avatar = Instantiate(avatarPrefab, scrollView.transform, false);
+            GameObject avatar = Instantiate(avatarPrefab, scrollView.transform, false);
 
-            var nextLevel = PlayerPrefs.GetInt("next_level");
-            if (nextLevel == 0)
-                nextLevel = 1;
+            int nextLevel = UserManager.CurrentUser.GetNextLevelIndex() + 1;
 
             LevelButton currentButton = null;
-            var levelButtons = scrollView.GetComponentsInChildren<LevelButton>();
-            foreach (var button in levelButtons)
+            LevelButton[] levelButtons = scrollView.GetComponentsInChildren<LevelButton>();
+            foreach (LevelButton button in levelButtons)
             {
                 if (button.NumLevel != nextLevel)
                     continue;
@@ -55,7 +53,7 @@ namespace BubbleShooterKit
             if (currentButton == null)
                 currentButton = levelButtons[levelButtons.Length - 1];
 
-            var newPos = scrollView.GetComponent<RectTransform>().anchoredPosition;
+            Vector2 newPos = scrollView.GetComponent<RectTransform>().anchoredPosition;
             newPos.y =
                 scrollRect.transform.InverseTransformPoint(scrollView.GetComponent<RectTransform>().position).y -
                 scrollRect.transform.InverseTransformPoint(currentButton.transform.position).y;
@@ -63,14 +61,14 @@ namespace BubbleShooterKit
             if (newPos.y < scrollView.GetComponent<RectTransform>().anchoredPosition.y)
                 scrollView.GetComponent<RectTransform>().anchoredPosition = newPos;
 
-            var targetPos = currentButton.transform.position + new Vector3(0, 1.0f, 0);
+            Vector3 targetPos = currentButton.transform.position + new Vector3(0, 1.0f, 0);
 
             LevelButton prevButton = null;
-            if (UserManager.CurrentUser.unlockedNextLevel == 1)
+            if (LevelManager.unlockedNextLevel)
             {
-                foreach (var button in scrollView.GetComponentsInChildren<LevelButton>())
+                foreach (LevelButton button in scrollView.GetComponentsInChildren<LevelButton>())
                 {
-                    if (button.NumLevel != PlayerPrefs.GetInt("last_selected_level"))
+                    if (button.NumLevel != LevelManager.lastSelectedLevel)
                         continue;
                     prevButton = button;
                     break;
@@ -80,7 +78,7 @@ namespace BubbleShooterKit
             if (prevButton != null)
             {
                 avatar.transform.position = prevButton.transform.position + new Vector3(0, 1.0f, 0);
-                var sequence = DOTween.Sequence();
+                Sequence sequence = DOTween.Sequence();
                 sequence.AppendInterval(0.5f);
                 sequence.Append(avatar.transform.DOMove(targetPos, 0.8f));
                 sequence.AppendCallback(() => avatar.GetComponent<LevelAvatar>().StartFloatingAnimation());

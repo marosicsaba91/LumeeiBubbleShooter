@@ -7,159 +7,147 @@ using UnityEngine;
 
 namespace BubbleShooterKit
 {
-	/// <summary>
-	/// Utility class used to instantiate new bubbles according to the
-	/// level's configuration.
-	/// </summary>
+    /// <summary>
+    /// Utility class used to instantiate new bubbles according to the
+    /// level's configuration.
+    /// </summary>
+    ///
+
     public class BubbleFactory : MonoBehaviour
     {
-	    public GameLogic GameLogic;
-	    public BubblePool BubblePool;
-	    
-		public readonly List<ObjectPool> RandomizedColorBubblePrefabs = new List<ObjectPool>();
-		public readonly List<ObjectPool> ShootingColorBubblePrefabs = new List<ObjectPool>();
+        public GameLogic GameLogic;
+        public BubblePool BubblePool;
 
-		public bool poolsInitialized;
+        public readonly List<ObjectPool> RandomizedColorBubblePrefabs = new();
+        public readonly List<ObjectPool> ShootingColorBubblePrefabs = new();
 
-	    public void PreLevelInitialize(LevelInfo levelInfo)
-	    {
-		    if (!PlayerPrefs.HasKey("num_available_colors"))
-		    {
-			    var randomColors = levelInfo.AvailableColors;
-			    randomColors.Shuffle();
-			    PlayerPrefs.SetInt("num_available_colors", randomColors.Count);
-			    for (var i = 0; i < randomColors.Count; i++)
-				    PlayerPrefs.SetInt($"available_colors_{i}", (int)randomColors[i]);
-		    }
+        public bool poolsInitialized;
 
-		    var numColors = PlayerPrefs.GetInt("num_available_colors");
-		    var availableColors = new List<ColorBubbleType>();
-		    for (var i = 0; i < numColors; i++)
-			    availableColors.Add((ColorBubbleType) PlayerPrefs.GetInt($"available_colors_{i}"));
-		    foreach (var color in availableColors)
-			    RandomizedColorBubblePrefabs.Add(BubblePool.GetColorBubblePool(color));
+        public void PreLevelInitialize(LevelInfo levelInfo)
+        {
+            if (LevelManager.availableColors.Count == 0)
+            {
+                LevelManager.availableColors.AddRange(levelInfo.AvailableColors);
+                LevelManager.availableColors.Shuffle();
+            }
 
-		    if (!poolsInitialized)
-		    {
-			    poolsInitialized = true;
-			    foreach (var pool in RandomizedColorBubblePrefabs)
-				    pool.Initialize();
-			    foreach (var pool in ShootingColorBubblePrefabs)
-				    pool.Initialize();
-		    }
-	    }
-	    
-	    public void PostLevelInitialize(Level level)
-	    {
-		    ShootingColorBubblePrefabs.Clear();
-		    
-		    var colors = new List<ColorBubbleType>();
-		    foreach (var row in level.Tiles)
-		    {
-			    foreach (var bubble in row)
-			    {
-				    if (bubble != null)
-				    {
-					    var colorBubble = bubble.GetComponent<ColorBubble>();
-					    if (colorBubble != null)
-					    {
-						    if (!colors.Contains(colorBubble.Type))
-							    colors.Add(colorBubble.Type);
-					    }
-				    }
-			    }
-		    }
-		    
-		    foreach (var color in colors)
-			    ShootingColorBubblePrefabs.Add(BubblePool.GetColorBubblePool(color));
-	    }
-	    
-	    public void Reset()
-	    {
-		    RandomizedColorBubblePrefabs.Clear();
-		    ShootingColorBubblePrefabs.Clear();
-	    }
+            foreach (ColorBubbleType color in LevelManager.availableColors)
+                RandomizedColorBubblePrefabs.Add(BubblePool.GetColorBubblePool(color));
 
-	    public void ResetAvailableShootingBubbles(LevelInfo levelInfo)
-	    {
-		    ShootingColorBubblePrefabs.Clear();
+            if (!poolsInitialized)
+            {
+                poolsInitialized = true;
+                foreach (ObjectPool pool in RandomizedColorBubblePrefabs)
+                    pool.Initialize();
+                foreach (ObjectPool pool in ShootingColorBubblePrefabs)
+                    pool.Initialize();
+            }
+        }
 
-		    foreach (var color in levelInfo.AvailableColors)
-			    ShootingColorBubblePrefabs.Add(BubblePool.GetColorBubblePool(color));
-	    }
+        public void PostLevelInitialize(Level level)
+        {
+            ShootingColorBubblePrefabs.Clear();
 
-		public GameObject CreateRandomColorBubble()
-		{
-			var idx = Random.Range(0, ShootingColorBubblePrefabs.Count);
-			var bubble = ShootingColorBubblePrefabs[idx].GetObject();
-			bubble.GetComponent<Bubble>().GameLogic = GameLogic;
-			return bubble;
-		}
-		
-		public GameObject CreateBubble(TileInfo tile)
-		{
-			var bubbleTile = tile as BubbleTileInfo;
-			if (bubbleTile != null)
-			{
-				var bubble = BubblePool.GetColorBubblePool(bubbleTile.Type).GetObject();
-				bubble.GetComponent<Bubble>().GameLogic = GameLogic;
-				bubble.GetComponent<ColorBubble>().CoverType = bubbleTile.CoverType;
-				if (bubbleTile.CoverType != CoverType.None)
-					AddCover(bubble, bubbleTile.CoverType);	
-				return bubble;
-			}
+            List<ColorBubbleType> colors = new();
+            foreach (List<Bubble> row in level.Tiles)
+            {
+                foreach (Bubble bubble in row)
+                {
+                    if (bubble != null && bubble.TryGetComponent<ColorBubble>(out var colorBubble) && !colors.Contains(colorBubble.Type))
+                        colors.Add(colorBubble.Type);
+                }
+            }
 
-			var randomBubbleTile = tile as RandomBubbleTileInfo;
-			if (randomBubbleTile != null)
-			{
-				var bubble = RandomizedColorBubblePrefabs[(int)randomBubbleTile.Type % RandomizedColorBubblePrefabs.Count].GetObject();
-				bubble.GetComponent<Bubble>().GameLogic = GameLogic;
-				bubble.GetComponent<ColorBubble>().CoverType = randomBubbleTile.CoverType;
-				if (randomBubbleTile.CoverType != CoverType.None)
-					AddCover(bubble, randomBubbleTile.CoverType);	
-				return bubble;
-			}
+            foreach (ColorBubbleType color in colors)
+                ShootingColorBubblePrefabs.Add(BubblePool.GetColorBubblePool(color));
+        }
 
-			var blockerTile = tile as BlockerTileInfo;
-			if (blockerTile != null)
-			{
-				var blocker = BubblePool.GetBlockerBubblePool(blockerTile.BubbleType).GetObject();
-				blocker.GetComponent<Bubble>().GameLogic = GameLogic;
-				return blocker;
-			}
+        public void Reset()
+        {
+            RandomizedColorBubblePrefabs.Clear();
+            ShootingColorBubblePrefabs.Clear();
+        }
 
-			var boosterTile = tile as BoosterTileInfo;
-			if (boosterTile != null)
-			{
-				var booster = BubblePool.GetBoosterBubblePool(boosterTile.BubbleType).GetObject();
-				booster.GetComponent<BoosterBubble>().GameLogic = GameLogic;
-				return booster;
-			}
+        public void ResetAvailableShootingBubbles(LevelInfo levelInfo)
+        {
+            ShootingColorBubblePrefabs.Clear();
 
-			var collectableTile = tile as CollectableTileInfo;
-			if (collectableTile != null)
-			{
-				var collectable = BubblePool.GetCollectableBubblePool(collectableTile.Type).GetObject();
-				collectable.GetComponent<CollectableBubble>().GameLogic = GameLogic;
-				return collectable;
-			}
+            foreach (ColorBubbleType color in levelInfo.AvailableColors)
+                ShootingColorBubblePrefabs.Add(BubblePool.GetColorBubblePool(color));
+        }
 
-			return null;
-		}
+        public GameObject CreateRandomColorBubble()
+        {
+            int idx = Random.Range(0, ShootingColorBubblePrefabs.Count);
+            GameObject bubble = ShootingColorBubblePrefabs[idx].GetObject();
+            bubble.GetComponent<Bubble>().GameLogic = GameLogic;
+            return bubble;
+        }
 
-		public GameObject CreateColorBubble(ColorBubbleType type)
-		{
-			var bubble = BubblePool.GetColorBubblePool(type).GetObject();
-			bubble.GetComponent<Bubble>().GameLogic = GameLogic;
-			return bubble;
-		}
-	    
-		private void AddCover(GameObject bubble, CoverType type)
-		{
-			bubble.GetComponent<ColorBubble>().CoverType = type;
-			var cover = BubblePool.GetCoverPool(type).GetObject();
-			cover.transform.parent = bubble.transform;
-			cover.transform.localPosition = Vector3.zero;
-		}
+        public GameObject CreateBubble(TileInfo tile)
+        {
+            BubbleTileInfo bubbleTile = tile as BubbleTileInfo;
+            if (bubbleTile != null)
+            {
+                GameObject bubble = BubblePool.GetColorBubblePool(bubbleTile.Type).GetObject();
+                bubble.GetComponent<Bubble>().GameLogic = GameLogic;
+                bubble.GetComponent<ColorBubble>().CoverType = bubbleTile.CoverType;
+                if (bubbleTile.CoverType != CoverType.None)
+                    AddCover(bubble, bubbleTile.CoverType);
+                return bubble;
+            }
+
+            RandomBubbleTileInfo randomBubbleTile = tile as RandomBubbleTileInfo;
+            if (randomBubbleTile != null)
+            {
+                GameObject bubble = RandomizedColorBubblePrefabs[(int)randomBubbleTile.Type % RandomizedColorBubblePrefabs.Count].GetObject();
+                bubble.GetComponent<Bubble>().GameLogic = GameLogic;
+                bubble.GetComponent<ColorBubble>().CoverType = randomBubbleTile.CoverType;
+                if (randomBubbleTile.CoverType != CoverType.None)
+                    AddCover(bubble, randomBubbleTile.CoverType);
+                return bubble;
+            }
+
+            BlockerTileInfo blockerTile = tile as BlockerTileInfo;
+            if (blockerTile != null)
+            {
+                GameObject blocker = BubblePool.GetBlockerBubblePool(blockerTile.BubbleType).GetObject();
+                blocker.GetComponent<Bubble>().GameLogic = GameLogic;
+                return blocker;
+            }
+
+            BoosterTileInfo boosterTile = tile as BoosterTileInfo;
+            if (boosterTile != null)
+            {
+                GameObject booster = BubblePool.GetBoosterBubblePool(boosterTile.BubbleType).GetObject();
+                booster.GetComponent<BoosterBubble>().GameLogic = GameLogic;
+                return booster;
+            }
+
+            CollectableTileInfo collectableTile = tile as CollectableTileInfo;
+            if (collectableTile != null)
+            {
+                GameObject collectable = BubblePool.GetCollectableBubblePool(collectableTile.Type).GetObject();
+                collectable.GetComponent<CollectableBubble>().GameLogic = GameLogic;
+                return collectable;
+            }
+
+            return null;
+        }
+
+        public GameObject CreateColorBubble(ColorBubbleType type)
+        {
+            GameObject bubble = BubblePool.GetColorBubblePool(type).GetObject();
+            bubble.GetComponent<Bubble>().GameLogic = GameLogic;
+            return bubble;
+        }
+
+        private void AddCover(GameObject bubble, CoverType type)
+        {
+            bubble.GetComponent<ColorBubble>().CoverType = type;
+            GameObject cover = BubblePool.GetCoverPool(type).GetObject();
+            cover.transform.parent = bubble.transform;
+            cover.transform.localPosition = Vector3.zero;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace BubbleShooterKit
     public class SafeArea : MonoBehaviour
     {
         private RectTransform panel;
-        private Rect lastSafeArea = new Rect(0, 0, 0, 0);
+        private Rect lastSafeArea = new(0, 0, 0, 0);
 
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace BubbleShooterKit
 
         private void Refresh()
         {
-            var safeArea = GetSafeArea();
+            Rect safeArea = GetSafeArea();
             if (safeArea != lastSafeArea)
             {
                 ApplySafeArea(safeArea);
@@ -40,8 +40,8 @@ namespace BubbleShooterKit
         {
             lastSafeArea = rect;
 
-            var anchorMin = rect.position;
-            var anchorMax = rect.position + rect.size;
+            Vector2 anchorMin = rect.position;
+            Vector2 anchorMax = rect.position + rect.size;
             anchorMin.x /= Screen.width;
             anchorMin.y /= Screen.height;
             anchorMax.x /= Screen.width;

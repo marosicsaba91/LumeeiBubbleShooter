@@ -47,12 +47,12 @@ namespace BubbleShooterKit
 			{
 				if (gameScreen.CurrentPopups.Count > 0)
 					return;
-				
-				var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-				
-				var pointer = new PointerEventData(EventSystem.current);
+
+                Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+
+                PointerEventData pointer = new(EventSystem.current);
 				pointer.position = mainCamera.WorldToScreenPoint(mousePos);
-				var raycastResults = new List<RaycastResult>();
+                List<RaycastResult> raycastResults = new();
 				EventSystem.current.RaycastAll(pointer, raycastResults);
 				if (raycastResults.Count > 0 &&
 				    (raycastResults[0].gameObject == swapBubblesIcon || raycastResults[0].gameObject == energyOrb))
@@ -62,7 +62,7 @@ namespace BubbleShooterKit
 				}
 				else
 				{
-					var hit = Physics2D.Raycast(mousePos, Vector3.forward);
+                    RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.forward);
 					if (hit.collider != null)
 					{
 						shooter.SetInputEnabled(false);

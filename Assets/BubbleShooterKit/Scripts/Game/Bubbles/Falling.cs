@@ -30,9 +30,9 @@ namespace BubbleShooterKit
 		{
 			falling = true;
 			circleCollider.enabled = false;
-			var sign = Random.Range(0, 2);
-			var x = Random.Range(GameplayConstants.FallingMinXForce, GameplayConstants.FallingMaxXForce);
-			var y = Random.Range(GameplayConstants.FallingMinYForce, GameplayConstants.FallingMaxYForce);
+            int sign = Random.Range(0, 2);
+            float x = Random.Range(GameplayConstants.FallingMinXForce, GameplayConstants.FallingMaxXForce);
+            float y = Random.Range(GameplayConstants.FallingMinYForce, GameplayConstants.FallingMaxYForce);
 			body.linearVelocity = new Vector2(sign == 0 ? x : -x, y);
 			FadeOutSprite();
 			if (gameObject.activeInHierarchy)
@@ -44,7 +44,7 @@ namespace BubbleShooterKit
 			falling = false;
 			if (spriteRenderer != null)
 			{
-				var newColor = spriteRenderer.color;
+                Color newColor = spriteRenderer.color;
 				newColor.a = 1.0f;
 				spriteRenderer.color = newColor;
 			}
@@ -59,7 +59,7 @@ namespace BubbleShooterKit
 
 		private void FadeOutSprite()
 		{
-			var seq = DOTween.Sequence();
+            Sequence seq = DOTween.Sequence();
 			seq.AppendInterval(GameplayConstants.FallingFadeOutDelay);
 			seq.Append(spriteRenderer.DOFade(0.0f, GameplayConstants.FallingFadeOutDuration));
 			seq.Play();
@@ -67,11 +67,11 @@ namespace BubbleShooterKit
 
 		private IEnumerator AutoDestroy()
 		{
-			var colorBubble = GetComponent<ColorBubble>();
+            ColorBubble colorBubble = GetComponent<ColorBubble>();
 			if (colorBubble != null && colorBubble.CoverType != CoverType.None)
 			{
 				colorBubble.CoverType = CoverType.None;
-				var cover = transform.GetChild(1).gameObject;
+                GameObject cover = transform.GetChild(1).gameObject;
 				cover.GetComponent<PooledObject>().Pool.ReturnObject(cover);
 			}
 			yield return new WaitForSeconds(2.0f);

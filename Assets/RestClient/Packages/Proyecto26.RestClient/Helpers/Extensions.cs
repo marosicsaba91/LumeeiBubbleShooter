@@ -64,11 +64,11 @@ namespace Proyecto26.Common
         /// <returns>The full url with query string params.</returns>
         public static string BuildUrl(this string uri, Dictionary<string, string> queryParams)
         {
-            var url = uri;
-            var defaultParams = RestClient.DefaultRequestParams;
+            string url = uri;
+            Dictionary<string, string> defaultParams = RestClient.DefaultRequestParams;
             if (defaultParams.Any() || queryParams.Any())
             {
-                var urlParamKeys = queryParams.Keys;
+                Dictionary<string, string>.KeyCollection urlParamKeys = queryParams.Keys;
                 url += (url.Contains("?") ? "&" : "?") + string.Join("&",
                     queryParams
                     .Concat(

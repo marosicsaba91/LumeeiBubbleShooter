@@ -15,19 +15,13 @@ namespace BubbleShooterKit
 		public List<SoundCollection> Collections;
 
 		private ObjectPool soundFxPool;
-		private readonly Dictionary<string, AudioClip> nameToSound = new Dictionary<string, AudioClip>();
+		private readonly Dictionary<string, AudioClip> nameToSound = new();
 
 		private void Awake()
-		{
-			if (!PlayerPrefs.HasKey("sound_enabled"))
-				PlayerPrefs.SetInt("sound_enabled", 1);
-			
-			if (!PlayerPrefs.HasKey("music_enabled"))
-				PlayerPrefs.SetInt("music_enabled", 1);
-			
+		{			
 			soundFxPool = GetComponent<ObjectPool>();
-			foreach (var collection in Collections)
-				foreach (var sound in collection.Sounds)
+			foreach (SoundCollection collection in Collections)
+				foreach (AudioClip sound in collection.Sounds)
 					nameToSound.Add(sound.name, sound);
 		}
 
@@ -38,27 +32,26 @@ namespace BubbleShooterKit
 
 		public void PlaySoundFx(string soundName)
 		{
-			var clip = nameToSound[soundName];
+            AudioClip clip = nameToSound[soundName];
 			if (clip != null)
 				PlaySoundFx(clip);
 		}
 
 		private void PlaySoundFx(AudioClip clip)
-		{
-            var sound = PlayerPrefs.GetInt("sound_enabled");
-			if (sound == 1 && clip != null)
+		{ 
+            if (UserManager.CurrentUser.soundEnabled && clip != null)
                 soundFxPool.GetObject().GetComponent<SoundFx>().Play(clip);
 		}
 		
         public void SetSoundEnabled(bool soundEnabled)
         {
-            PlayerPrefs.SetInt("sound_enabled", soundEnabled ? 1 : 0);
+            UserManager.CurrentUser.soundEnabled = soundEnabled;
         }
 
         public void SetMusicEnabled(bool musicEnabled)
         {
-            PlayerPrefs.SetInt("music_enabled", musicEnabled ? 1 : 0);
-			var bgMusic = FindFirstObjectByType<BackgroundMusic>();
+            UserManager.CurrentUser.musicEnabled = musicEnabled;
+            BackgroundMusic bgMusic = FindFirstObjectByType<BackgroundMusic>();
 	        if (bgMusic != null)
 	            bgMusic.GetComponent<AudioSource>().mute = !musicEnabled;
         }

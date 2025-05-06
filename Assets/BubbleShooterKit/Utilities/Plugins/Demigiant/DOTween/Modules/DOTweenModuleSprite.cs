@@ -74,7 +74,7 @@ namespace DG.Tweening
         public static Tweener DOBlendableColor(this SpriteRenderer target, Color endValue, float duration)
         {
             endValue = endValue - target.color;
-            Color to = new Color(0, 0, 0, 0);
+            Color to = new(0, 0, 0, 0);
             return DOTween.To(() => to, x => {
                     Color diff = x - to;
                     to = x;

@@ -57,8 +57,8 @@ namespace BubbleShooterKit
 		
 		public void OnBuyButtonPressed()
 		{
-			var numCoins = PlayerPrefs.GetInt("num_coins");
-			var cost = GameConfig.ExtraBubblesCost;
+            int numCoins = UserManager.CurrentUser.coins;
+            int cost = GameConfig.ExtraBubblesCost;
 			if (numCoins >= cost)
 			{
 				CoinsSystem.SpendCoins(cost);

@@ -4,7 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -43,44 +43,42 @@ namespace BubbleShooterKit
         {
             yield return new WaitForSeconds(1.5f);
             Close();
-            var gameScreen = ParentScreen as GameScreen;
+            GameScreen gameScreen = ParentScreen as GameScreen;
             if (gameScreen != null)
                 gameScreen.GameLogic.StartGame();
         }
 
         public void SetGoals(LevelInfo levelInfo)
         {
-            var availableColors = new List<ColorBubbleType>();
-            var numColors = PlayerPrefs.GetInt("num_available_colors");
-            for (var i = 0; i < numColors; i++)
-                availableColors.Add((ColorBubbleType) PlayerPrefs.GetInt($"available_colors_{i}"));
+            List<ColorBubbleType> availableColors = new();
 
-		    PlayerPrefs.DeleteKey("num_available_colors");
-		    for (var i = 0; i < numColors; i++)
-			    PlayerPrefs.DeleteKey($"available_colors_{i}");
+            for (int i = 0; i < LevelManager.availableColors.Count; i++)
+                availableColors.Add(LevelManager.availableColors[i]);
 
-            foreach (var goal in levelInfo.Goals)
+            LevelManager.availableColors.Clear();
+
+            foreach (LevelGoal goal in levelInfo.Goals)
             {
-                var goalItem = Instantiate(goalPrefab);
+                GameObject goalItem = Instantiate(goalPrefab);
                 goalItem.transform.SetParent(goalGroup.transform, false);
                 if (goal is CollectBubblesGoal)
                 {
-                    var concreteGoal = (CollectBubblesGoal)goal;
+                    CollectBubblesGoal concreteGoal = (CollectBubblesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(ColorBubbleSprites[(int)concreteGoal.Type], concreteGoal.Amount);
                 }
                 else if (goal is CollectRandomBubblesGoal)
                 {
-                    var concreteGoal = (CollectRandomBubblesGoal)goal;
+                    CollectRandomBubblesGoal concreteGoal = (CollectRandomBubblesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(ColorBubbleSprites[(int)availableColors[(int)concreteGoal.Type]], concreteGoal.Amount);
                 }
                 else if (goal is CollectCollectablesGoal)
                 {
-                    var concreteGoal = (CollectCollectablesGoal)goal;
+                    CollectCollectablesGoal concreteGoal = (CollectCollectablesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(CollectableBubbleSprites[(int)concreteGoal.Type], concreteGoal.Amount);
                 }
                 else if (goal is CollectLeavesGoal)
                 {
-                    var concreteGoal = (CollectLeavesGoal)goal;
+                    CollectLeavesGoal concreteGoal = (CollectLeavesGoal)goal;
                     goalItem.GetComponent<GoalItem>().Initialize(LeafSprite, concreteGoal.Amount);
                 }
             }

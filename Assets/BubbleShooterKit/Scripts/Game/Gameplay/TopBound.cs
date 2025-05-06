@@ -18,7 +18,7 @@ namespace BubbleShooterKit
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-			var bubble = other.GetComponent<Bubble>();
+            Bubble bubble = other.GetComponent<Bubble>();
 			if (bubble != null && !bubble.CollidingWithAnotherBubble && gameScreen != null)
 			{
 				gameScreen.GameLogic.HandleTopRowMatches(bubble);

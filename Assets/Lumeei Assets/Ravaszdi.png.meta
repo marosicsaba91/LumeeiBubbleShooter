@@ -185,7 +185,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Ravaszdi_0: -7418074792977043416
+      Ravaszdi_1: 3738418588720205715
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

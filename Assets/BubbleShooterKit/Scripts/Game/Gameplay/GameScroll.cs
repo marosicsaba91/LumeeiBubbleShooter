@@ -37,8 +37,9 @@ namespace BubbleShooterKit
 			leaves = levelLeaves;
 
 			prevLevelGround = level.GetGround();
-			PlayerPrefs.SetFloat("scrolled_height", 0f);
-		}
+			LevelManager.scrolledHeight = 0;
+
+        }
 
 		public void Reset()
 		{
@@ -57,8 +58,8 @@ namespace BubbleShooterKit
 		{
 			if (!isScrollDisabled)
 			{
-				var newGround = level.GetGround();
-				var groundDiff = newGround - prevLevelGround;
+                int newGround = level.GetGround();
+                int groundDiff = newGround - prevLevelGround;
 				ScrollLevel(groundDiff);
 				prevLevelGround = newGround;
 			}
@@ -70,25 +71,23 @@ namespace BubbleShooterKit
 
 		private void ScrollLevel(int rows)
 		{
-			var verticalIncrement = PlayerPrefs.GetFloat("scrolled_height");
-			verticalIncrement += rows * tileHeight * GameplayConstants.TileHeightMultiplier;
-			PlayerPrefs.SetFloat("scrolled_height", verticalIncrement);
+            LevelManager.scrolledHeight += rows * tileHeight * GameplayConstants.TileHeightMultiplier;
 
-			for (var i = 0; i < tilePositions.Count; i++)
+			for (int i = 0; i < tilePositions.Count; i++)
 			{
-				var row = tilePositions[i];
-				for (var j = 0; j < row.Count; j++)
+                List<Vector2> row = tilePositions[i];
+				for (int j = 0; j < row.Count; j++)
 				{
-					var newPos = row[j];
+                    Vector2 newPos = row[j];
 					newPos.y += rows * tileHeight * GameplayConstants.TileHeightMultiplier;
 					row[j] = newPos;
 				}
 			}
 
-			var temptativePosY = tilePositions[0][0].y;
+            float temptativePosY = tilePositions[0][0].y;
 
-			var topPivot = new Vector2(0, Camera.main.pixelHeight * GameplayConstants.TopPivotHeight);
-			var topPivotPos = Camera.main.ScreenToWorldPoint(topPivot);
+            Vector2 topPivot = new(0, Camera.main.pixelHeight * GameplayConstants.TopPivotHeight);
+            Vector3 topPivotPos = Camera.main.ScreenToWorldPoint(topPivot);
 			if (temptativePosY <= topPivotPos.y)
 			{
 				if (!isScrollDisabled)
@@ -104,26 +103,26 @@ namespace BubbleShooterKit
 					isScrollDisabled = false;
 				}
 
-				foreach (var row in level.Tiles)
+				foreach (List<Bubble> row in level.Tiles)
 				{
-					foreach (var tile in row)
+					foreach (Bubble tile in row)
 					{
 						if (tile != null)
 						{
-							var newPos = tile.transform.position;
+                            Vector3 newPos = tile.transform.position;
 							newPos.y += rows * tileHeight * GameplayConstants.TileHeightMultiplier;
 							tile.transform.DOMove(newPos, GameplayConstants.LevelScrollSpeed);
 						}
 					}
 				}
 
-				var pos = topLine.transform.position;
+                Vector3 pos = topLine.transform.position;
 				pos.y += rows * tileHeight * GameplayConstants.TileHeightMultiplier;
-				var seq = DOTween.Sequence();
+                Sequence seq = DOTween.Sequence();
 				seq.Append(topLine.transform.DOMove(pos, GameplayConstants.LevelScrollSpeed));
 				seq.AppendCallback(gameScreen.UnlockInput);
 
-				foreach (var leaf in leaves)
+				foreach (GameObject leaf in leaves)
 				{
 					if (leaf != null)
 					{
@@ -137,18 +136,18 @@ namespace BubbleShooterKit
 
 		private void FixBubblePositions(float temptativePosY)
 		{
-			var topPivot = new Vector2(0, Camera.main.pixelHeight * GameplayConstants.TopPivotHeight);
-			var topPivotPos = Camera.main.ScreenToWorldPoint(topPivot);
+            Vector2 topPivot = new(0, Camera.main.pixelHeight * GameplayConstants.TopPivotHeight);
+            Vector3 topPivotPos = Camera.main.ScreenToWorldPoint(topPivot);
 
-			var temptativePosY2 = topPivotPos.y;
-			var idx = 0;
-			foreach (var row in level.Tiles)
+            float temptativePosY2 = topPivotPos.y;
+            int idx = 0;
+			foreach (List<Bubble> row in level.Tiles)
 			{
-				foreach (var tile in row)
+				foreach (Bubble tile in row)
 				{
 					if (tile != null)
 					{
-						var newPos = tile.transform.position;
+                        Vector3 newPos = tile.transform.position;
 						newPos.y = topPivotPos.y - idx * tileHeight * GameplayConstants.TileHeightMultiplier;
 						tile.transform.DOMove(newPos, GameplayConstants.LevelScrollSpeed);
 					}
@@ -157,13 +156,13 @@ namespace BubbleShooterKit
 				++idx;
 			}
 
-			var pos = topLine.transform.position;
+            Vector3 pos = topLine.transform.position;
 			pos.y = temptativePosY2 + (tileHeight * 0.6f);
-			var seq = DOTween.Sequence();
+            Sequence seq = DOTween.Sequence();
 			seq.Append(topLine.transform.DOMove(pos, GameplayConstants.LevelScrollSpeed));
 			seq.AppendCallback(gameScreen.UnlockInput);
 
-			foreach (var leaf in leaves)
+			foreach (GameObject leaf in leaves)
 			{
 				if (leaf != null)
 				{
@@ -172,17 +171,15 @@ namespace BubbleShooterKit
 					leaf.transform.DOMove(pos, GameplayConstants.LevelScrollSpeed);
 				}
 			}
+			 
+            LevelManager.scrolledHeight += topPivotPos.y - temptativePosY;
 
-			var verticalIncrement = PlayerPrefs.GetFloat("scrolled_height");
-			verticalIncrement += topPivotPos.y - temptativePosY;
-			PlayerPrefs.SetFloat("scrolled_height", verticalIncrement);
-
-			for (var i = 0; i < tilePositions.Count; i++)
+			for (int i = 0; i < tilePositions.Count; i++)
 			{
-				var row = tilePositions[i];
-				for (var j = 0; j < row.Count; j++)
+                List<Vector2> row = tilePositions[i];
+				for (int j = 0; j < row.Count; j++)
 				{
-					var newPos = row[j];
+                    Vector2 newPos = row[j];
 					newPos.y += topPivotPos.y - temptativePosY;
 					row[j] = newPos;
 				}

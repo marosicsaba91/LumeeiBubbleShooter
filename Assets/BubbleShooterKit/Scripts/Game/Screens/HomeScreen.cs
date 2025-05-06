@@ -25,12 +25,12 @@ namespace BubbleShooterKit
 		protected override void Start()
 		{
 			base.Start();
-			
-			var bgMusic = FindFirstObjectByType<BackgroundMusic>();
+
+            BackgroundMusic bgMusic = FindFirstObjectByType<BackgroundMusic>();
 			if (bgMusic == null)
 				Instantiate(bgMusicPrefab);
 
-			var adsSystem = FindFirstObjectByType<AdsSystem>();
+            AdsSystem adsSystem = FindFirstObjectByType<AdsSystem>();
 			if (adsSystem == null)
 				Instantiate(adsSystemPrefab);
 			

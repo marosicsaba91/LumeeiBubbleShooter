@@ -50,7 +50,7 @@ namespace BubbleShooterKit
 				lockedBackgroundImage.gameObject.SetActive(false);
 				if (amount > 0)
 				{
-					amountText.text = PlayerPrefs.GetInt($"num_boosters_{(int) boosterBubbleType}").ToString();
+					amountText.text = UserManager.CurrentUser.GetBoosterAmount(boosterBubbleType).ToString();
 					amountImage.gameObject.SetActive(true);
 					amountText.gameObject.SetActive(true);
 					moreImage.gameObject.SetActive(false);
@@ -84,7 +84,7 @@ namespace BubbleShooterKit
 			    gameScreen.Shooter.IsSuperAimEnabled())
 				return;
 
-			var amount = PlayerPrefs.GetInt($"num_boosters_{(int)boosterBubbleType}");
+            int amount = UserManager.CurrentUser.GetBoosterAmount(boosterBubbleType);
 			if (amount > 0)
 			{
 				if (!playerBubbles.IsSpecialBubbleActive)
@@ -100,7 +100,7 @@ namespace BubbleShooterKit
 						moreImage.gameObject.SetActive(true);
 					}
 
-					PlayerPrefs.SetInt($"num_boosters_{(int) boosterBubbleType}", amount);
+                    UserManager.CurrentUser.SetBoosterAmount(boosterBubbleType, amount);
 					amountText.text = amount.ToString();
 				}
 			}

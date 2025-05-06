@@ -70,11 +70,7 @@ namespace BubbleShooterKit
         {
             numLevelTextBlue.text = NumLevel.ToString();
             numLevelTextPink.text = NumLevel.ToString();
-            var nextLevel = PlayerPrefs.GetInt("next_level");
-            if (nextLevel == 0)
-            {
-                nextLevel = 1;
-            }
+            int nextLevel = UserManager.CurrentUser.GetNextLevelIndex() + 1;
 
             if (NumLevel == nextLevel)
             {
@@ -88,7 +84,7 @@ namespace BubbleShooterKit
             {
                 buttonImage.sprite = playedButtonSprite;
                 numLevelTextPink.gameObject.SetActive(false);
-                var stars = PlayerPrefs.GetInt("level_stars_" + NumLevel);
+                int stars = UserManager.CurrentUser.GetLevelStars(NumLevel - 1);
                 switch (stars)
                 {
                     case 1:
@@ -126,11 +122,9 @@ namespace BubbleShooterKit
             if (buttonImage.sprite == lockedButtonSprite)
                 return;
 
-            var screen = GameObject.Find("LevelScreen").GetComponent<LevelScreen>();
-            if (screen != null)
-            {
-                var numLives = PlayerPrefs.GetInt("num_lives");
-                if (numLives > 0)
+            if (GameObject.Find("LevelScreen").TryGetComponent<LevelScreen>(out var screen))
+            { 
+                if (UserManager.CurrentUser.lives > 0)
                 {
                     if (!FileUtils.FileExists("Levels/" + NumLevel))
                     {
